@@ -1,0 +1,14 @@
+<!DOCTYPEhtml>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>404Error</title>
+</head>
+<body>
+	<h1 th:text="${status}+''+${error}"></h1>
+	<p>ページを表示できません。</p>
+	<form method="post" th:action="@{/logout}">
+		<button class="btnbtn-link" type="submit">TOP画面に戻る</button>
+	</form>
+</body>
+</html>
