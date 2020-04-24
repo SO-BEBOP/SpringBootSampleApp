@@ -4,8 +4,7 @@
 ## 概要
 SpringBootの基本機能を用いたECサイトのWebAppです。  
 資料として、また機能追加の検証などにご活用ください。  
-SpringVirtualStore\reference  
-に簡単な解説資料を入れています(更新中)。
+referenceに簡単な解説資料を入れています(更新中)。
 
 ## 環境
 LG : Java 8 / FW : SpringBoot / DB : MySQL  
