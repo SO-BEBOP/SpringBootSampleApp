@@ -11,7 +11,7 @@ public class HomeStoreController {
 
 	@GetMapping("/")
 	public String getHomeStore(Model model) {
-		model.addAttribute("contents", "store :: store_contents");
+		model.addAttribute("contents", "blank :: blank_contents");
 		return "/home";
 	}
 

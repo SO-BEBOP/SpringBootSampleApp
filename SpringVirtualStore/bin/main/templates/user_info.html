@@ -1,25 +1,37 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<link href="css\bootstrap.mylibrary.css" rel="stylesheet">
-	<link rel="stylesheet" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
-	<script src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-	<script th:src="@{/webjars/jquery/3.5.0/jquery.min.js}"></script>
-	<title>VirtualStore_userinfo</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>VirtualStore_userinfo</title>
 </head>
 
 <body>
 	<div th:fragment="userinfo_contents">
-		<link href="css\bootstrap.mylibrary.css" rel="stylesheet">
-		<link rel="stylesheet" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
-		<script src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-		<script th:src="@{/webjars/jquery/3.5.0/jquery.min.js}"></script>
+
+		<!-- breadcrumb start-->
+		<section class="breadcrumb breadcrumb_bg">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-lg-8">
+						<div class="breadcrumb_iner">
+							<div class="breadcrumb_iner_item">
+								<h2>user info</h2>
+								<p>
+									Home <span>-</span> user info
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- breadcrumb start-->
 		<div class="container">
-			<div class="col-sm-auto">
+			<div class="col-sm-auto my-5">
 				<div class="flex items-center justify-content-end">
 					<!--CSV出力用のリンク-->
 					<a class="btn btn-primary" th:href="@{'/user_info/csv'}">CSV出力</a>

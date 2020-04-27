@@ -45,8 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		// ポイント ２： 静的 リソース を 除外     
-		// 静的 リソース への アクセス には、 セキュリティ を 適用 し ない
+		//静的リソースを除外    
+		//静的リソースへのアクセスには、セキュリティを適用しない
 		web.ignoring().antMatchers(
 				"/webjars/**",
 				"/images/**",
@@ -56,7 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		// ポイント ３： 直 リンク の 禁止     // ログイン 不要 ページ の 設定     
+		// ポイント ３： 直 リンク の 禁止 
+		// ログイン 不要 ページ の 設定 
 		http
 				.authorizeRequests()
 				.antMatchers("/webjars/**").permitAll()
@@ -68,7 +69,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/").permitAll()
 				.antMatchers("/login").permitAll()
 				.antMatchers("/home").permitAll()
+				.antMatchers("/management").permitAll()
 				.antMatchers("/signup").permitAll()
+
 				//それ以外は直リンク禁止
 				.anyRequest().authenticated();
 

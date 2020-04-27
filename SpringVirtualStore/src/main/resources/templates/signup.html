@@ -1,86 +1,137 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<link href="css\bootstrap.mylibrary.css" rel="stylesheet">
-	<link rel="stylesheet" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
-	<script src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-	<script th:src="@{/webjars/jquery/3.5.0/jquery.min.js}"></script>
-	<title>VirtualStore_signup</title>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>VirtualStore</title>
+<link rel="icon" href="img/favicon.png">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<!-- animate CSS -->
+<link rel="stylesheet" href="css/animate.css">
+<!-- owl carousel CSS -->
+<link rel="stylesheet" href="css/owl.carousel.min.css">
+<!-- font awesome CSS -->
+<link rel="stylesheet" href="css/all.css">
+<!-- flaticon CSS -->
+<link rel="stylesheet" href="css/flaticon.css">
+<link rel="stylesheet" href="css/themify-icons.css">
+<!-- font awesome CSS -->
+<link rel="stylesheet" href="css/magnific-popup.css">
+<!-- swiper CSS -->
+<link rel="stylesheet" href="css/slick.css">
+<!-- style CSS -->
+<link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 	<div th:fragment="signup_contents">
-		<link href="css\bootstrap.mylibrary.css" rel="stylesheet">
-		<link rel="stylesheet" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
-		<script src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-		<script th:src="@{/webjars/jquery/3.5.0/jquery.min.js}"></script>
-		<div class="container">
-			<div class="col-sm-auto">
-				<div class="font-sans bg-white text-center my-8 mx-auto container overflow-hidden">
-					<form method="post" th:action="@{/signup}" th:object="${signupForm}">
-						<table class="table table-bordered table-hover">
-							<tr>
-								<th class="active">ユーザー名</th>
-								<td>
-									<div class="form-group" th:classappend="${#fields.hasErrors('userName')}?'has-error'">
-										<input type="text" class="form-control" th:field="*{userName}" />
-										<span class="text-danger"
-											th:if="${#fields.hasErrors('userName')}"
-											th:errors="*{userName}">Error message</span>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<th class="active">パスワード</th>
-								<td>
-									<div class="form-group"
-										th:classappend="${#fields.hasErrors('password')}?'has-error'">
-										<input type="text" class="form-control" th:field="*{password}" />
-										<span class="text-danger"
-											th:if="${#fields.hasErrors('password')}"
-											th:errors="*{password}">Error message</span>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<th class="active">生年月日</th>
-								<td>
-									<div class="form-group"
-										th:classappend="${#fields.hasErrors('birthday')}?'has-error'">
-										<input type="text" class="form-control"
-											placeholder="yyyy/MM/dd" th:field="*{birthday}" /> <span
-											class="text-danger" th:if="${#fields.hasErrors('birthday')}"
-											th:errors="*{birthday}">Error message</span>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<th class="active">性別</th>
-								<td>
-									<div class="form-group">
-										<div th:each="item : ${radioGender}"
-											class="flex items-center justify-start">
-											<input type="radio" name="radioGender" th:text="${item.key}"
-												th:value="${item.value}" th:field="*{gender}"></input>
-										</div>
-									</div>
-								</td>
-							</tr>
-						</table>
-						<div class="flex items-center justify-center">
-							<button name=createAccount
-								class="btn-lg btn-block bg-red-600 hover:bg-red-300
-								text-white font-medium py-2 px-4 y-2"
-								type="submit">Sign Up</button>
+		<!--================Home Banner Area =================-->
+		<!-- breadcrumb start-->
+		<section class="breadcrumb breadcrumb_bg">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-lg-8">
+						<div class="breadcrumb_iner">
+							<div class="breadcrumb_iner_item">
+								<h2>Sign up</h2>
+								<p>
+									Home <span>-</span> Shop Single
+								</p>
+							</div>
 						</div>
-					</form>
+					</div>
 				</div>
 			</div>
-		</div>
+		</section>
+		<!-- breadcrumb start-->
+		<!--================signup_part Area =================-->
+		<section class="login_part padding_top">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-lg-6 col-md-6">
+						<div class="login_part_text text-center">
+							<div class="login_part_text_iner">
+								<h2>
+									This web application<br> is a demonstration.
+								</h2>
+								<p>Your entries do not affect your privacy, but please do
+									not enter accurate personal information.</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6">
+						<div class="login_part_form">
+							<div class="login_part_form_iner">
+								<h3>Please enter your information.</h3>
+								<form class="row contact_form" th:action="@{/signup}"
+									method="post" th:object="${signupForm}">
+									<div class="horizontal">
+										<div class="hidden_box">
+											<input type="hidden" disabled class="form-control"
+												id="userid" name="userid" /> <span class="placeholder"
+												data-placeholder="userid"></span>
+										</div>
+										<div class="col-md-12 form-group p_star">
+											<div class="mb-2"
+												th:classappend="${#fields.hasErrors('userName')}?'has-error'">
+												<span class="text-danger"
+													th:if="${#fields.hasErrors('userName')}"
+													th:errors="*{userName}">Error message</span> <input
+													th:field="*{userName}" type="text" class="form-control"
+													id="userName" name="userName" /> <span class="placeholder"
+													data-placeholder="Account name"></span>
+											</div>
+										</div>
+
+										<div class="col-md-12 form-group p_star">
+											<div class="mb-2"
+												th:classappend="${#fields.hasErrors('password')}?'has-error'">
+												<span class="text-danger"
+													th:if="${#fields.hasErrors('password')}"
+													th:errors="*{password}">Error message</span> <input
+													type="text" class="form-control" id="password"
+													name="password" /> <span class="placeholder"
+													data-placeholder="Password"></span>
+											</div>
+										</div>
+										<div class="col-md-12 form-group p_star">
+											<div class="mb-2"
+												th:classappend="${#fields.hasErrors('birthday')}?'has-error'">
+												<span class="text-danger"
+													th:if="${#fields.hasErrors('birthday')}"
+													th:errors="*{birthday}">Error message</span> <input
+													type="text" class="form-control" id="birthday"
+													name="birthday" /> <span class="placeholder"
+													data-placeholder="Birthday [yyyy/MM/dd]"></span>
+											</div>
+										</div>
+									</div>
+									<div class="form-check-inline" th:each="item : ${radioGender}">
+										<div class="col-md-auto form-group m-10">
+											<input class="form-check-input" type="radio"
+												name="radioGender" th:value="${item.value}"
+												th:text="${item.key}">
+										</div>
+									</div>
+									<div class="col-md-12 form-group">
+										<button type="submit" value="submit" class="btn_3">
+											SIGN UP</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 	</div>
+	<!--================signup_part end =================-->
 </body>
+
 </html>
