@@ -1,30 +1,32 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>VirtualStore</title>
-	<link rel="icon" href="img/favicon.png">
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<!-- animate CSS -->
-	<link rel="stylesheet" href="css/animate.css">
-	<!-- owl carousel CSS -->
-	<link rel="stylesheet" href="css/owl.carousel.min.css">
-	<!-- font awesome CSS -->
-	<link rel="stylesheet" href="css/all.css">
-	<!-- flaticon CSS -->
-	<link rel="stylesheet" href="css/flaticon.css">
-	<link rel="stylesheet" href="css/themify-icons.css">
-	<!-- font awesome CSS -->
-	<link rel="stylesheet" href="css/magnific-popup.css">
-	<!-- swiper CSS -->
-	<link rel="stylesheet" href="css/slick.css">
-	<!-- style CSS -->
-	<link rel="stylesheet" href="css/style.css">
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>VirtualStore</title>
+<link rel="icon" href="img/favicon.png">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<!-- animate CSS -->
+<link rel="stylesheet" href="css/animate.css">
+<!-- owl carousel CSS -->
+<link rel="stylesheet" href="css/owl.carousel.min.css">
+<!-- font awesome CSS -->
+<link rel="stylesheet" href="css/all.css">
+<!-- flaticon CSS -->
+<link rel="stylesheet" href="css/flaticon.css">
+<link rel="stylesheet" href="css/themify-icons.css">
+<!-- font awesome CSS -->
+<link rel="stylesheet" href="css/magnific-popup.css">
+<!-- swiper CSS -->
+<link rel="stylesheet" href="css/slick.css">
+<!-- style CSS -->
+<link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -56,10 +58,12 @@
 					<div class="col-lg-6 col-md-6">
 						<div class="login_part_text text-center">
 							<div class="login_part_text_iner">
-								<h2>This web application<br> is a demonstration.</h2>
-								<p>Your entries do not affect your privacy,
-									but please do not enter accurate personal information.</p>
-								<a href="#" class="btn_3">Create an Account</a>
+								<h2>
+									This web application<br> is a demonstration.
+								</h2>
+								<p>Your entries do not affect your privacy, but please do
+									not enter accurate personal information.</p>
+								<a th:href="@{'/signup'}" class="btn_3">Create an Account</a>
 							</div>
 						</div>
 					</div>
@@ -67,21 +71,24 @@
 						<div class="login_part_form">
 							<div class="login_part_form_iner">
 								<div class="text-center">
-									<h3>Welcome Back ! <br> Please Log in now</h3>
+									<h3>
+										Welcome Back ! <br> Please Log in now
+									</h3>
 									<div class="my-3">
-										<p th:if="${ session['SPRING_SECURITY_LAST_EXCEPTION']} != null"
+										<p
+											th:if="${ session['SPRING_SECURITY_LAST_EXCEPTION']} != null"
 											th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
 											class="text-danger">Login error message</p>
 									</div>
 								</div>
 								<form class="row contact_form" action="/login" method="post">
 									<div class="col-md-12 form-group p_star">
-										<input type="text" class="form-control" id="userName" name="userName"
-											for="userName" placeholder="Username">
+										<input type="text" class="form-control" id="userName"
+											name="userName" for="userName" placeholder="Username">
 									</div>
 									<div class="col-md-12 form-group p_star">
-										<input type="password" class="form-control" id="password" name="password"
-											for="password" placeholder="Password">
+										<input type="password" class="form-control" id="password"
+											name="password" for="password" placeholder="Password">
 									</div>
 									<div class="col-md-12 form-group">
 										<button type="submit" value="submit" class="btn_3">

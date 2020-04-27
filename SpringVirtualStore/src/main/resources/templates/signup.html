@@ -84,11 +84,9 @@
 													th:if="${#fields.hasErrors('userName')}"
 													th:errors="*{userName}">Error message</span> <input
 													th:field="*{userName}" type="text" class="form-control"
-													id="userName" name="userName" /> <span class="placeholder"
-													data-placeholder="Account name"></span>
+													id="userName" name="userName" placeholder="User name*" />
 											</div>
 										</div>
-
 										<div class="col-md-12 form-group p_star">
 											<div class="mb-2"
 												th:classappend="${#fields.hasErrors('password')}?'has-error'">
@@ -96,8 +94,7 @@
 													th:if="${#fields.hasErrors('password')}"
 													th:errors="*{password}">Error message</span> <input
 													type="text" class="form-control" id="password"
-													name="password" /> <span class="placeholder"
-													data-placeholder="Password"></span>
+													name="password" placeholder="Password*" />
 											</div>
 										</div>
 										<div class="col-md-12 form-group p_star">
@@ -107,21 +104,20 @@
 													th:if="${#fields.hasErrors('birthday')}"
 													th:errors="*{birthday}">Error message</span> <input
 													type="text" class="form-control" id="birthday"
-													name="birthday" /> <span class="placeholder"
-													data-placeholder="Birthday [yyyy/MM/dd]"></span>
+													name="birthday" placeholder="Birthday [yyyy/MM/dd]*" />
 											</div>
 										</div>
-									</div>
-									<div class="form-check-inline" th:each="item : ${radioGender}">
-										<div class="col-md-auto form-group m-10">
-											<input class="form-check-input" type="radio"
-												name="radioGender" th:value="${item.value}"
-												th:text="${item.key}">
+										<div class="form-check-inline" th:each="item : ${radioGender}">
+											<div class="col-md-auto form-group m-10">
+												<input class="form-check-input" type="radio"
+													name="radioGender" th:text="${item.key}"
+													th:value="${item.value}" th:field="*{gender}">
+											</div>
 										</div>
-									</div>
-									<div class="col-md-12 form-group">
-										<button type="submit" value="submit" class="btn_3">
-											SIGN UP</button>
+										<div class="col-md-12 form-group">
+											<button type="submit" value="submit" class="btn_3">
+												SIGN UP</button>
+										</div>
 									</div>
 								</form>
 							</div>
