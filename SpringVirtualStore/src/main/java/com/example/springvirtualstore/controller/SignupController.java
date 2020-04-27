@@ -31,7 +31,7 @@ public class SignupController {
 		//既婚、未婚をMapに格納
 		radio.put("Man", "man");
 		radio.put("Woman", "woman");
-		radio.put("Unselected", null);
+		radio.put("Unselected", "unselected");
 
 		return radio;
 	}
