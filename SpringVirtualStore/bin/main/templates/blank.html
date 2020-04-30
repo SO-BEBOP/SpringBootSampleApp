@@ -1,7 +1,6 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
 <!-- Required meta tags -->
@@ -9,24 +8,6 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>home</title>
-<link rel="icon" href="img/favicon.png">
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<!-- animate CSS -->
-<link rel="stylesheet" href="css/animate.css">
-<!-- owl carousel CSS -->
-<link rel="stylesheet" href="css/owl.carousel.min.css">
-<!-- font awesome CSS -->
-<link rel="stylesheet" href="css/all.css">
-<!-- flaticon CSS -->
-<link rel="stylesheet" href="css/flaticon.css">
-<link rel="stylesheet" href="css/themify-icons.css">
-<!-- font awesome CSS -->
-<link rel="stylesheet" href="css/magnific-popup.css">
-<!-- swiper CSS -->
-<link rel="stylesheet" href="css/slick.css">
-<!-- style CSS -->
-<link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -39,6 +20,9 @@
 						<div class="banner_slider owl-carousel">
 							<div class="single_banner_slider">
 								<div class="row">
+									<div class="banner_img d-none d-lg-block">
+										<img src="img/banner_img.png" alt="">
+									</div>
 									<div class="col-lg-5 col-md-8">
 										<div class="banner_text">
 											<div class="banner_text_iner">
@@ -113,33 +97,33 @@
 								</div>
 							</div>
 						</div>
-						<div class="slider-counter"></div>
-					</div>
-				</div>
-			</div>
-			<!-- modal -->
-			<div class="modal fade" id="Modal" tabindex="-1" role="dialog"
-				aria-labelledby="Modal" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="Modal">商品を購入しますか？</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body text-center">購入処理は後日実装予定</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary w-20"
-								data-dismiss="modal">Cancel</button>
-							<button type="button" class="btn btn-primary w-20"
-								data-dismiss="modal">OK!</button>
-						</div>
+						<!-- <div class="slider-counter"></div> -->
 					</div>
 				</div>
 			</div>
 		</section>
+		<!-- modal -->
+		<div class="modal fade" id="Modal" tabindex="-1" role="dialog"
+			aria-labelledby="Modal" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="Modal">商品を購入しますか？</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body text-center">購入処理は後日実装予定</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary w-20"
+							data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-primary w-20"
+							data-dismiss="modal">OK!</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!-- banner part end-->
 	</div>
 </body>
