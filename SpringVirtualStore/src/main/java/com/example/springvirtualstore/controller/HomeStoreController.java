@@ -16,7 +16,7 @@ public class HomeStoreController {
 
 	@GetMapping("/")
 	public String getHomeStore(Principal principal, @AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
-		model.addAttribute("contents", "blank :: blank_contents");
+		model.addAttribute("contents", "top_slider :: topslider_contents");
 
 		return "/home";
 	}

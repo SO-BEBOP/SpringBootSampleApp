@@ -57,13 +57,16 @@ public class SignupController {
 		}
 		System.out.println(form);
 
-		// insert 用 変数     
+		String gender = form.getGender();
+		if (gender == null) {
+			gender = "unselected";
+		}
+		// insert用の変数     
 		UserMst userMst = new UserMst();
-
-		userMst.setUser_name(form.getUserName());//ユーザー名
-		userMst.setUser_password(form.getPassword());//パスワード
-		userMst.setUser_birthday(form.getBirthday());//生年月日
-		userMst.setUser_gender(form.getGender());//性別
+		userMst.setUser_name(form.getUserName()); // ユーザー名
+		userMst.setUser_password(form.getPassword()); // パスワード
+		userMst.setUser_birthday(form.getBirthday()); // 生年月日
+		userMst.setUser_gender(gender); // 性別
 
 		boolean result = userService.insert(userMst);//ユーザー登録結果の判定
 		if (result == true) {
