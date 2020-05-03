@@ -61,7 +61,7 @@
 					<!--ポイント１：日付型のフォーマット-->
 					<td th:text="${#dates.format(businessInfoList.create_at,'YYYY/MM/dd')}"></td>
 					<td>
-						<th:action="@{/business_info}" method="post">
+						<form th:action="@{/business_info}" method="post">
 							<input type="submit" class="btn btn-outline-danger"
 								th:action="@{/business_info}" name="delete" value="削除">
 							<input type="hidden" name="id"
