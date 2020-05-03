@@ -16,6 +16,7 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import com.example.springvirtualstore.domain.model.LoginUserDetails;
 import com.example.springvirtualstore.domain.model.UserMst;
 import com.example.springvirtualstore.domain.repository.UserDao;
 
@@ -51,6 +52,10 @@ public class UserService {
 
 	public UserMst selectOne(String userId) {
 		return dao.selectOne(userId);
+	}
+
+	public LoginUserDetails selectLoginUser(String userName) {
+		return dao.selectLoginUser(userName);
 	}
 
 	public boolean updateOne(UserMst userMst) throws DataAccessException {

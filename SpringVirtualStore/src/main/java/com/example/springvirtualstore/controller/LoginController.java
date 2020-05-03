@@ -17,7 +17,7 @@ public class LoginController {
 
 	@PostMapping("/login")
 	public String postLogin(Model model) {
-		model.addAttribute("contents", "store :: store_contents");
+		model.addAttribute("contents", "blank :: blank_contents");
 
 		return "redirect:home";
 	}
