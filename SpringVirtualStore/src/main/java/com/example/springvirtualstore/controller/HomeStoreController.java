@@ -1,5 +1,7 @@
 package com.example.springvirtualstore.controller;
 
+import java.security.Principal;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,8 +12,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class HomeStoreController {
 
 	@GetMapping("/")
-	public String getHomeStore(Model model) {
+	public String getHomeStore(Principal principal, Model model) {
 		model.addAttribute("contents", "blank :: blank_contents");
+
+		//		String name = principal.getName();
+		//		//		model.addAttribute("username", name);
+		//		System.out.println("DEBUG >>>" + name);
+
 		return "/home";
 	}
 

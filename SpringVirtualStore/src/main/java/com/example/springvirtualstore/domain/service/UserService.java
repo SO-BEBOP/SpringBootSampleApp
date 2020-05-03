@@ -83,6 +83,36 @@ public class UserService {
 		return result;
 	}
 
+	public boolean updateInfo(UserMst userMst) throws DataAccessException {
+		// インスタンス 生成
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+		// 設定
+		def.setName("UpdateUser");
+		def.setReadOnly(false);
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		//トランザクション開始
+		TransactionStatus status = txManager.getTransaction(def);
+		//判定用変数
+		boolean result = false;
+		try {
+			//１件更新
+			int rowNumber = dao.updateInfo(userMst);
+			if (rowNumber > 0) {
+				//update成功
+				result = true;
+			}
+		} catch (Exception e) {
+			//ロールバック
+			txManager.rollback(status);
+			throw new DataAccessException("ERROR Update", e) {
+			};
+		}
+		//コミット    
+		txManager.commit(status);
+
+		return result;
+	}
+
 	public boolean deleteOne(String userId) {
 		//１件削除
 		int rowNumber = dao.deleteOne(userId);

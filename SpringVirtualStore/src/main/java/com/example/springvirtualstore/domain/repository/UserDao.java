@@ -18,6 +18,8 @@ public interface UserDao {
 
 	public int updateOne(UserMst userMst) throws DataAccessException;
 
+	public int updateInfo(UserMst userMst) throws DataAccessException;
+
 	public int deleteOne(String userId) throws DataAccessException;
 
 	public void userCsvOut() throws DataAccessException;

@@ -129,6 +129,26 @@ public class UserDaoJdbcImpl implements UserDao {
 	}
 
 	@Override
+	public int updateInfo(UserMst userMst) throws DataAccessException {
+
+		//１件更新するSQL
+		String sql = "UPDATE user_mst SET"
+				+ " user_name = ?,"
+				+ " user_birthday = ?,"
+				+ " user_gender = ?"
+				+ " WHERE"
+				+ " user_id = ?";
+		//１件更新
+		int rowNumber = jdbc.update(sql,
+				userMst.getUser_name(),
+				userMst.getUser_birthday(),
+				userMst.getUser_gender(),
+				userMst.getUser_id());
+
+		return rowNumber;
+	}
+
+	@Override
 	public int deleteOne(String userId) throws DataAccessException {
 		//１件削除
 		int rowNumber = jdbc.update("DELETE FROM user_mst WHERE user_id = ?", userId);

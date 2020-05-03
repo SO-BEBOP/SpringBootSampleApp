@@ -64,6 +64,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/css/**").permitAll()
 				.antMatchers("/js/**").permitAll()
 				.antMatchers("/img/**").permitAll()
+				.antMatchers("/sass/**").permitAll()
+				.antMatchers("/webfonts/**").permitAll()
+				.antMatchers("/fonts/**").permitAll()
 
 				//権限無し直リンク許可
 				.antMatchers("/").permitAll()
