@@ -30,37 +30,39 @@
 			</div>
 		</section>
 		<!-- breadcrumb start-->
+
 		<div class="container">
-			<div class="col-sm-auto my-5">
-				<div class="flex items-center justify-content-end">
-					<!--CSV出力用のリンク-->
-					<a class="btn btn-primary" th:href="@{'/user_info/csv'}">CSV出力</a>
+			<div class="col-sm-auto mt-5 mb-2">
+				<div class="row align-items-center justify-content-between">
+					<div class="float-left">
+						<!--CSV出力用のリンク-->
+						<a class="btn btn-primary" th:href="@{'/user_info/csv'}">CSV出力</a>
+					</div>
+					<div class="col-center">
+						<!--更新・削除処理の結果表示用-->
+						<label class="text-info" th:text="${result}">結果表示</label>
+					</div>
 				</div>
-				<div class="flex items-center justify-content-between">
-					<!--更新・削除処理の結果表示用-->
-					<label class="text-info" th:text="${result}">結果表示</label>
-					<!--ユーザー一覧の件数-->
-					<label th:text="'合計：'+${userListCount}+'件'"> </label>
-				</div>
-				<table class="table table-bordered table-hover text-center ">
-					<tr>
-						<th class="info col-sm-auto">ユーザID</th>
-						<th class="info col-sm-auto">ユーザ名</th>
-						<th class="info col-sm-auto">生年月日</th>
-						<th class="info col-sm-auto">性別</th>
-						<th class="info col-sm-auto"></th>
-					</tr>
-					<tr th:each="userMst:${userList}">
-						<td th:text="${userMst.user_id}"></td>
-						<td th:text="${userMst.user_name}"></td>
-						<!--ポイント１：日付型のフォーマット-->
-						<td th:text="${#dates.format(userMst.user_birthday,'YYYY/MM/dd')}"></td>
-						<td th:text="${userMst.user_gender}"></td>
-						<td><a class="btn btn-info"
-							th:href="@{'/user_detail/'+${userMst.user_id}}">詳細</a></td>
-					</tr>
-				</table>
 			</div>
+			<table class="table table-bordered table-hover text-center ">
+				<tr>
+					<th class="info col-sm-auto">ユーザID</th>
+					<th class="info col-sm-auto">ユーザ名</th>
+					<th class="info col-sm-auto">生年月日</th>
+					<th class="info col-sm-auto">性別</th>
+					<th class="info col-sm-auto text-danger"><label
+						th:text="'合計：'+${userListCount}+'件'"> </label></th>
+				</tr>
+				<tr th:each="userMst:${userList}">
+					<td th:text="${userMst.user_id}"></td>
+					<td th:text="${userMst.user_name}"></td>
+					<!--ポイント１：日付型のフォーマット-->
+					<td th:text="${#dates.format(userMst.user_birthday,'YYYY/MM/dd')}"></td>
+					<td th:text="${userMst.user_gender}"></td>
+					<td><a class="btn btn-info"
+						th:href="@{'/user_detail/'+${userMst.user_id}}">詳細</a></td>
+				</tr>
+			</table>
 		</div>
 	</div>
 </body>
