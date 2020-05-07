@@ -33,16 +33,12 @@ public class BusinessDaoJdbcImpl implements BusinessDao {
 
 		//取引テーブルに１件登録するSQL
 		String sql = "INSERT INTO business_tbl("
-				+ " business_id,"
 				+ " business_user_id,"
-				+ " business_product_id,"
 				+ " business_sales"
-				+ ")VALUES(?,?,?,?)";
+				+ ")VALUES(?,?)";
 		//１件挿入
 		int rowNumber = jdbc.update(sql,
-				businessTbl.getBusiness_id(),
 				businessTbl.getBusiness_user_id(),
-				businessTbl.getBusiness_product_id(),
 				businessTbl.getBusiness_sales());
 
 		return rowNumber;
@@ -57,7 +53,6 @@ public class BusinessDaoJdbcImpl implements BusinessDao {
 		//取得したデータを結果返却用の変数にセットしていく
 		businessTbl.setBusiness_id((Integer) map.get("business_id"));
 		businessTbl.setBusiness_user_id((Integer) map.get("business_user_id"));
-		businessTbl.setBusiness_product_id((Integer) map.get("business_product_id"));
 		businessTbl.setBusiness_sales((Integer) map.get("business_sales"));
 		businessTbl.setBusiness_state((Integer) map.get("business_state"));
 		businessTbl.setCreate_at((Date) map.get("create_at"));
@@ -79,7 +74,6 @@ public class BusinessDaoJdbcImpl implements BusinessDao {
 			//Businessインスタンスに取得したデータをセットする
 			businessTbl.setBusiness_id((Integer) map.get("business_id"));
 			businessTbl.setBusiness_user_id((Integer) map.get("business_user_id"));
-			businessTbl.setBusiness_product_id((Integer) map.get("business_product_id"));
 			businessTbl.setBusiness_sales((Integer) map.get("business_sales"));
 			businessTbl.setBusiness_state((Integer) map.get("business_state"));
 			businessTbl.setCreate_at((Date) map.get("create_at"));
@@ -98,14 +92,11 @@ public class BusinessDaoJdbcImpl implements BusinessDao {
 	//		String sql = "UPDATE business_tbl SET"
 	//				+ " business_id = ?,"
 	//				+ " business_user_id = ?,"
-	//				+ " business_product_id = ?,"
 	//				+ " business_sales = ?"
 	//				+ " WHERE"
 	//				+ " business_id = ?"
 	//				+ " AND"
-	//				+ " business_user_id = ?"
-	//				+ " AND"
-	//				+ " business_product_id = ?";
+	//				+ " business_user_id = ?";
 	//
 	//		//１件更新
 	//		int rowNumber = jdbc.update(sql,

@@ -2,18 +2,14 @@ package com.example.springvirtualstore.domain.model;
 
 import java.util.Date;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
-
 import lombok.Data;
 
 @Data
-@Table("business_info_tbl")
-public class BusinessTbl {
-	@Id
+public class BusinessInfo {
+
 	private int business_id;
-	@Id
-	private int business_user_id;
+	private String user_name;
+	private String product_name;
 	private int business_sales;
 	private int business_state;
 	private Date create_at;

@@ -8,14 +8,13 @@ import org.springframework.data.relational.core.mapping.Table;
 import lombok.Data;
 
 @Data
-@Table("product_mst")
-public class ProductMst {
+@Table("cart_tbl")
+public class CartTbl {
 	@Id
-	private int product_id;
-	private String product_name;
-	private int product_price;
-	private int product_stock;
-	private int product_state;
+	private int cart_id;
+	private int cart_user_id;
+	private int cart_product_id;
+	private int cart_state;
 	private Date create_at;
 	private Date updata_at;
 }

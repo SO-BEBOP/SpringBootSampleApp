@@ -92,9 +92,9 @@ public class BusinessService {
 	}
 
 	//	public void businessCsvOut() throws DataAccessException {
-//		//CSV出力
-//		dao.businessCsvOut();
-//	}
+	//		//CSV出力
+	//		dao.businessCsvOut();
+	//	}
 
 	//サーバーに保存されているファイルを取得して、byte配列に変換する.
 	public byte[] getFile(String fileName) throws IOException {

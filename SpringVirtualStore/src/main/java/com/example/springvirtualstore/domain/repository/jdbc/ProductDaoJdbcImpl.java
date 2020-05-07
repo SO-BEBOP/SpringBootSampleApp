@@ -57,7 +57,6 @@ public class ProductDaoJdbcImpl implements ProductDao {
 		productMst.setProduct_price((Integer) map.get("product_price"));
 		productMst.setProduct_stock((Integer) map.get("product_stock"));
 		productMst.setProduct_state((Integer) map.get("product_state"));
-		productMst.setFinal_sales((Date) map.get("final_sales"));
 		productMst.setCreate_at((Date) map.get("create_at"));
 		productMst.setUpdata_at((Date) map.get("updata_at"));
 
@@ -80,7 +79,6 @@ public class ProductDaoJdbcImpl implements ProductDao {
 			productMst.setProduct_price((Integer) map.get("product_price"));
 			productMst.setProduct_stock((Integer) map.get("product_stock"));
 			productMst.setProduct_state((Integer) map.get("product_state"));
-			productMst.setFinal_sales((Date) map.get("final_sales"));
 			productMst.setCreate_at((Date) map.get("create_at"));
 			productMst.setUpdata_at((Date) map.get("updata_at"));
 

@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import com.example.springvirtualstore.domain.model.LoginUserDetails;
 import com.example.springvirtualstore.domain.model.UserMst;
 import com.example.springvirtualstore.domain.repository.UserDao;
 
@@ -77,6 +78,29 @@ public class UserDaoJdbcImpl implements UserDao {
 	}
 
 	@Override
+	public LoginUserDetails selectLoginUser(String userName) throws DataAccessException {
+		//１件取得
+		Map<String, Object> map = jdbc.queryForMap(
+				"SELECT"
+						+ " user_id,"
+						+ " user_name,"
+						+ " user_password,"
+						+ " user_role"
+						+ " FROM user_mst"
+						+ " WHERE user_name=?",
+				userName);
+		//結果返却用の変数
+		LoginUserDetails loginUser = new LoginUserDetails();
+		//取得したデータを結果返却用の変数にセットしていく
+		loginUser.setUser_id((Integer) map.get("user_id"));
+		loginUser.setUser_name((String) map.get("user_name"));
+		loginUser.setUser_password((String) map.get("user_password"));
+		loginUser.setUser_role((String) map.get("user_role"));
+
+		return loginUser;
+	}
+
+	@Override
 	public List<UserMst> selectMany() throws DataAccessException {
 		//user_mstテーブルのデータを全件取得
 		List<Map<String, Object>> getList = jdbc.queryForList("SELECT * FROM user_mst");
@@ -121,6 +145,26 @@ public class UserDaoJdbcImpl implements UserDao {
 		int rowNumber = jdbc.update(sql,
 				userMst.getUser_name(),
 				password,
+				userMst.getUser_birthday(),
+				userMst.getUser_gender(),
+				userMst.getUser_id());
+
+		return rowNumber;
+	}
+
+	@Override
+	public int updateInfo(UserMst userMst) throws DataAccessException {
+
+		//１件更新するSQL
+		String sql = "UPDATE user_mst SET"
+				+ " user_name = ?,"
+				+ " user_birthday = ?,"
+				+ " user_gender = ?"
+				+ " WHERE"
+				+ " user_id = ?";
+		//１件更新
+		int rowNumber = jdbc.update(sql,
+				userMst.getUser_name(),
 				userMst.getUser_birthday(),
 				userMst.getUser_gender(),
 				userMst.getUser_id());

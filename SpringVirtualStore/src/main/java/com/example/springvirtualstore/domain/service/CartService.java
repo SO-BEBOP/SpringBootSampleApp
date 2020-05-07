@@ -1,10 +1,5 @@
 package com.example.springvirtualstore.domain.service;
 
-import java.io.IOException;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,23 +11,21 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-import com.example.springvirtualstore.domain.model.LoginUserDetails;
-import com.example.springvirtualstore.domain.model.UserMst;
-import com.example.springvirtualstore.domain.repository.UserDao;
+import com.example.springvirtualstore.domain.model.CartTbl;
+import com.example.springvirtualstore.domain.repository.CartDao;
 
 @Service
-public class UserService {
-
+public class CartService {
 	@Autowired
-	@Qualifier("UserDaoJdbcImpl")
-	UserDao dao;
+	@Qualifier("CartDaoJdbcImpl")
+	CartDao dao;
 
 	@Autowired
 	PlatformTransactionManager txManager;
 
-	public boolean insert(UserMst userMst) {
+	public boolean insert(CartTbl cartTbl) {
 		// insert実行
-		int rowNumber = dao.insertOne(userMst);
+		int rowNumber = dao.insertOne(cartTbl);
 		// 判定用変数
 		boolean result = false;
 		if (rowNumber > 0) {
@@ -46,23 +39,23 @@ public class UserService {
 		return dao.count();
 	}
 
-	public List<UserMst> selectMany() {
+	public List<CartTbl> selectMany() {
 		return dao.selectMany();
 	}
 
-	public UserMst selectOne(String userId) {
-		return dao.selectOne(userId);
+	public List<CartTbl> selectManyFromStateParam(String userId, String cartState) {
+		return dao.selectManyFromStateParam(userId, cartState);
 	}
 
-	public LoginUserDetails selectLoginUser(String userName) {
-		return dao.selectLoginUser(userName);
+	public CartTbl selectOne(String cartId) {
+		return dao.selectOne(cartId);
 	}
 
-	public boolean updateOne(UserMst userMst) throws DataAccessException {
+	public boolean updateOne(CartTbl cartTbl) throws DataAccessException {
 		// インスタンス 生成
 		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
 		// 設定
-		def.setName("UpdateUser");
+		def.setName("UpdateCart");
 		def.setReadOnly(false);
 		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		//トランザクション開始
@@ -71,7 +64,7 @@ public class UserService {
 		boolean result = false;
 		try {
 			//１件更新
-			int rowNumber = dao.updateOne(userMst);
+			int rowNumber = dao.updateOne(cartTbl);
 			if (rowNumber > 0) {
 				//update成功
 				result = true;
@@ -88,11 +81,11 @@ public class UserService {
 		return result;
 	}
 
-	public boolean updateInfo(UserMst userMst) throws DataAccessException {
+	public boolean updateOneFromStateParam(Integer userId) throws DataAccessException {
 		// インスタンス 生成
 		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
 		// 設定
-		def.setName("UpdateUser");
+		def.setName("UpdateCart");
 		def.setReadOnly(false);
 		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		//トランザクション開始
@@ -101,7 +94,7 @@ public class UserService {
 		boolean result = false;
 		try {
 			//１件更新
-			int rowNumber = dao.updateInfo(userMst);
+			int rowNumber = dao.updateOneFromStateParam(userId);
 			if (rowNumber > 0) {
 				//update成功
 				result = true;
@@ -118,9 +111,9 @@ public class UserService {
 		return result;
 	}
 
-	public boolean deleteOne(String userId) {
+	public boolean deleteOne(String cartId) {
 		//１件削除
-		int rowNumber = dao.deleteOne(userId);
+		int rowNumber = dao.deleteOne(cartId);
 		//判定用変数
 		boolean result = false;
 		if (rowNumber > 0) {
@@ -130,18 +123,18 @@ public class UserService {
 		return result;
 	}
 
-	public void userCsvOut() throws DataAccessException {
-		//CSV出力
-		dao.userCsvOut();
-	}
+	//	public void cartCsvOut() throws DataAccessException {
+	//		//CSV出力
+	//		dao.cartCsvOut();
+	//	}
 
 	//サーバーに保存されているファイルを取得して、byte配列に変換する.
-	public byte[] getFile(String fileName) throws IOException {
-		//ファイルシステム（デフォルト）の取得
-		FileSystem fs = FileSystems.getDefault();//ファイル取得
-		Path p = fs.getPath(fileName);
-		//ファイルをbyte配列に変換
-		byte[] bytes = Files.readAllBytes(p);
-		return bytes;
-	}
+	//	public byte[] getFile(String fileName) throws IOException {
+	//		//ファイルシステム（デフォルト）の取得
+	//		FileSystem fs = FileSystems.getDefault();//ファイル取得
+	//		Path p = fs.getPath(fileName);
+	//		//ファイルをbyte配列に変換
+	//		byte[] bytes = Files.readAllBytes(p);
+	//		return bytes;
+	//	}
 }

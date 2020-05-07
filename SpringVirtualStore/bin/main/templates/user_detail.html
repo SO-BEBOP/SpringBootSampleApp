@@ -1,27 +1,42 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<link href="css\bootstrap.mylibrary.css" rel="stylesheet">
-	<link rel="stylesheet" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
-	<script src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-	<script th:src="@{/webjars/jquery/3.5.0/jquery.min.js}"></script>
-	<title>VirtualStore_signup</title>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 
 <body>
 	<div th:fragment="userdetail_contents">
-		<link href="css\bootstrap.mylibrary.css" rel="stylesheet">
-		<link rel="stylesheet" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
-		<script src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-		<script th:src="@{/webjars/jquery/3.5.0/jquery.min.js}"></script>
+
+		<!-- breadcrumb start-->
+		<section class="breadcrumb breadcrumb_bg">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-lg-8">
+						<div class="breadcrumb_iner">
+							<div class="breadcrumb_iner_item">
+								<h2>user detail</h2>
+								<p>
+									Home <span>-</span> user detail
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- breadcrumb start-->
+
 		<div class="container">
 			<div class="col-sm-auto">
-				<div class="font-sans bg-white text-center my-10 mx-auto container overflow-hidden">
-					<form method="post" th:action="@{/user_detail}" th:object="${signupForm}">
+				<div
+					class="font-sans bg-white text-center my-10 mx-auto container overflow-hidden">
+					<form method="post" th:action="@{/user_detail}"
+						th:object="${signupForm}">
 						<table class="table table-bordered table-hover">
 							<tr>
 								<td>
@@ -33,7 +48,8 @@
 							<tr>
 								<th class="active">ユーザー名</th>
 								<td>
-									<div class="form-group" th:classappend="${#fields.hasErrors('userName')}?'has-error'">
+									<div class="form-group"
+										th:classappend="${#fields.hasErrors('userName')}?'has-error'">
 										<input type="text" class="form-control" th:field="*{userName}" />
 										<span class="text-danger"
 											th:if="${#fields.hasErrors('userName')}"
@@ -41,7 +57,7 @@
 									</div>
 								</td>
 							</tr>
-							<tr>
+							<!-- <tr>
 								<th class="active">パスワード</th>
 								<td>
 									<div class="form-group"
@@ -52,7 +68,7 @@
 											th:errors="*{password}">Error message</span>
 									</div>
 								</td>
-							</tr>
+							</tr> -->
 							<tr>
 								<th class="active">生年月日</th>
 								<td>
@@ -78,6 +94,7 @@
 								</td>
 							</tr>
 						</table>
+
 						<!-- 更新 ボタン -->
 						<button class="btn btn-primary btn-lg pull-right" type="submit"
 							name="update">Update</button>

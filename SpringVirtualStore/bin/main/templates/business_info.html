@@ -1,23 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-<link th:href="@{/css/bootstrap.mylibrary.css}" rel="stylesheet">
-</link>
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-</link>
-<script src="js\jquery-3.5.0.min.js"></script>
-<script src="js\bootstrap.min.js"></script>
-<title>VirtualStore_businessinfo</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 
 <body>
 	<div th:fragment="businessinfo_contents">
+
 		<!-- breadcrumb start-->
 		<section class="breadcrumb breadcrumb_bg">
 			<div class="container">
@@ -27,7 +19,9 @@
 							<div class="breadcrumb_iner_item">
 								<h2>business info</h2>
 								<p>
-									Home <span>-</span> business info
+									Home
+									<span>-</span>
+									business info
 								</p>
 							</div>
 						</div>
@@ -35,47 +29,73 @@
 				</div>
 			</div>
 		</section>
-		<!-- breadcrumb start-->
+		<!-- breadcrumb end-->
+
 		<div class="container">
-			<div class="col-sm-auto my-5">
-				<div class="flex items-center justify-content-end">
-					<!--CSV出力用のリンク-->
-					<a class="btn btn-primary" th:href="@{'/business_info/csv'}">CSV出力</a>
+			<div class="col-sm-auto mt-5 mb-2">
+				<div class="row align-items-center justify-content-between">
+					<div class="float-left">
+						<!--CSV出力用のリンク-->
+						<a class="btn btn-primary" th:href="@{'/business_info/csv'}">CSV出力</a>
+					</div>
+					<div class="col-center">
+						<!--更新・削除処理の結果表示用-->
+						<label class="text-info" th:text="${result}">結果表示</label>
+					</div>
 				</div>
-				<div class="flex items-center justify-content-between">
-					<!--更新・削除処理の結果表示用-->
-					<label class="text-info" th:text="${result}">結果表示</label>
-					<!--取引一覧の件数-->
-					<label th:text="'合計：'+${businessListCount}+'件'"> </label>
-				</div>
-				<table class="table table-bordered table-hover text-center ">
-					<tr>
-						<th class="info col-sm-auto">取引ID</th>
-						<th class="info col-sm-auto">商品ID</th>
-						<th class="info col-sm-auto">顧客ID</th>
-						<th class="info col-sm-auto">金額</th>
-						<th class="info col-sm-auto">取引日</th>
-						<th class="info col-sm-auto"></th>
-					</tr>
-					<tr th:each="businessTbl:${businessList}">
-						<td th:text="${businessTbl.business_id}"></td>
-						<td th:text="${businessTbl.business_user_id}"></td>
-						<td th:text="${businessTbl.business_product_id}"></td>
-						<td th:text="${businessTbl.business_sales}"></td>
-						<!--ポイント１：日付型のフォーマット-->
-						<td th:text="${#dates.format(businessTbl.create_at,'YYYY/MM/dd')}"></td>
-						<td>
-							<form th:action="@{/business_info}" method="post">
-								<input type="submit" class="btn btn-outline-danger"
-									th:action="@{/business_info}" name="delete" value="削除">
-								<input type="hidden" name="id"
-									th:value="${businessTbl.business_id}">
-							</form>
-					</tr>
-				</table>
 			</div>
+			<table class="table table-bordered table-hover text-center ">
+				<tr>
+					<th class="info col-sm-auto">取引ID</th>
+					<th class="info col-sm-auto">顧客名</th>
+					<!-- <th class="info col-sm-auto">商品名</th> -->
+					<th class="info col-sm-auto">金額</th>
+					<th class="info col-sm-auto">取引日</th>
+					<th class="info col-sm-auto text-danger">
+						<label th:text="'合計：'+${businessListCount}+'件'"> </label>
+					</th>
+				</tr>
+				<tr th:each="businessInfoList:${businessInfoList}">
+					<td th:text="${businessInfoList.business_id}"></td>
+					<td th:text="${businessInfoList.user_name}"></td>
+					<!-- <td th:text="${businessInfoList.product_name}"></td> -->
+					<td th:text="${businessInfoList.business_sales}"></td>
+					<!--ポイント１：日付型のフォーマット-->
+					<td th:text="${#dates.format(businessInfoList.create_at,'YYYY/MM/dd')}"></td>
+					<td>
+						<form th:action="@{/business_info}" method="post">
+							<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#Modal">削除</button>
+
+							<!-- modal -->
+							<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="Modal"
+								aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title text-danger font-weight-bold" id="Modal">削除確認</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<label class="text-danger ">選択した取引履歴を削除しますか？</label>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary w-20" data-dismiss="modal">Cancel</button>
+											<input type="submit" class="btn btn-outline-danger" th:action="@{/business_info}"
+												name="delete" value="削除">
+											<input type="hidden" name="id" th:value="${businessInfoList.business_id}">
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- modal -->
+
+						</form>
+					</td>
+				</tr>
+			</table>
 		</div>
-	</div>
 	</div>
 </body>
 </html>

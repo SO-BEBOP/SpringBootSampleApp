@@ -95,7 +95,6 @@ public class UserInfoController {
 		return "home";
 	}
 
-	// ポイント： ボタン 名 による メソッド 判定   // ユーザー 更新 用 処理.  
 	@PostMapping(value = "/user_detail", params = "update")
 	public String postUserDetailUpdate(@ModelAttribute SignupForm form,
 			Model model) {
@@ -105,12 +104,11 @@ public class UserInfoController {
 		UserMst userMst = new UserMst();
 		//フォームクラスをUserクラスに変換
 		userMst.setUser_id(form.getUserId());
-		userMst.setUser_name(form.getUserName());//ユーザー名
-		userMst.setUser_password(form.getPassword());//パスワード
-		userMst.setUser_birthday(form.getBirthday());//生年月日
-		userMst.setUser_gender(form.getGender());//性別
+		userMst.setUser_name(form.getUserName());
+		userMst.setUser_birthday(form.getBirthday());
+		userMst.setUser_gender(form.getGender());
 
-		boolean result = userService.updateOne(userMst);
+		boolean result = userService.updateInfo(userMst);
 		if (result == true) {
 			model.addAttribute("result", "更新成功");
 		} else {
