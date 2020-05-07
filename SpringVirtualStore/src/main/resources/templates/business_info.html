@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
 <meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 
 <body>
@@ -21,7 +19,9 @@
 							<div class="breadcrumb_iner_item">
 								<h2>business info</h2>
 								<p>
-									Home <span>-</span> business info
+									Home
+									<span>-</span>
+									business info
 								</p>
 							</div>
 						</div>
@@ -48,34 +48,32 @@
 				<tr>
 					<th class="info col-sm-auto">取引ID</th>
 					<th class="info col-sm-auto">顧客名</th>
-					<th class="info col-sm-auto">商品名</th>
+					<!-- <th class="info col-sm-auto">商品名</th> -->
 					<th class="info col-sm-auto">金額</th>
 					<th class="info col-sm-auto">取引日</th>
-					<th class="info col-sm-auto text-danger"><label
-						th:text="'合計：'+${businessListCount}+'件'"> </label></th>
+					<th class="info col-sm-auto text-danger">
+						<label th:text="'合計：'+${businessListCount}+'件'"> </label>
+					</th>
 				</tr>
 				<tr th:each="businessInfoList:${businessInfoList}">
 					<td th:text="${businessInfoList.business_id}"></td>
 					<td th:text="${businessInfoList.user_name}"></td>
-					<td th:text="${businessInfoList.product_name}"></td>
+					<!-- <td th:text="${businessInfoList.product_name}"></td> -->
 					<td th:text="${businessInfoList.business_sales}"></td>
 					<!--ポイント１：日付型のフォーマット-->
-					<td
-						th:text="${#dates.format(businessInfoList.create_at,'YYYY/MM/dd')}"></td>
+					<td th:text="${#dates.format(businessInfoList.create_at,'YYYY/MM/dd')}"></td>
 					<td>
 						<form th:action="@{/business_info}" method="post">
-							<button type="button" class="btn btn-outline-danger"
-								data-toggle="modal" data-target="#Modal">削除</button>
+							<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#Modal">削除</button>
+
 							<!-- modal -->
-							<div class="modal fade" id="Modal" tabindex="-1" role="dialog"
-								aria-labelledby="Modal" aria-hidden="true">
+							<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="Modal"
+								aria-hidden="true">
 								<div class="modal-dialog modal-dialog-centered" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h5 class="modal-title text-danger font-weight-bold"
-												id="Modal">削除確認</h5>
-											<button type="button" class="close" data-dismiss="modal"
-												aria-label="close">
+											<h5 class="modal-title text-danger font-weight-bold" id="Modal">削除確認</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="close">
 												<span aria-hidden="true">&times;</span>
 											</button>
 										</div>
@@ -83,17 +81,16 @@
 											<label class="text-danger ">選択した取引履歴を削除しますか？</label>
 										</div>
 										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary w-20"
-												data-dismiss="modal">Cancel</button>
-											<input type="submit" class="btn btn-outline-danger"
-												th:action="@{/business_info}" name="delete" value="削除">
-											<input type="hidden" name="id"
-												th:value="${businessInfoList.business_id}">
+											<button type="button" class="btn btn-secondary w-20" data-dismiss="modal">Cancel</button>
+											<input type="submit" class="btn btn-outline-danger" th:action="@{/business_info}"
+												name="delete" value="削除">
+											<input type="hidden" name="id" th:value="${businessInfoList.business_id}">
 										</div>
 									</div>
 								</div>
 							</div>
 							<!-- modal -->
+
 						</form>
 					</td>
 				</tr>

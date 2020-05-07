@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+<body>
+	<div th:fragment="cartinfo_contents">
+
+		<!-- breadcrumb start-->
+		<section class="breadcrumb breadcrumb_bg">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-lg-8">
+						<div class="breadcrumb_iner">
+							<div class="breadcrumb_iner_item">
+								<h2>Cart</h2>
+								<p>
+									Home
+									<span>-</span>
+									Cart
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- breadcrumb end-->
+
+		<div class="container">
+			<section class="cart_area padding_top">
+				<div class="container">
+					<div class="cart_inner">
+						<div class="table-responsive">
+							<div class=" col-sm-auto my-2 item-center">
+								<table class="table">
+									<thead>
+										<tr>
+											<th scope="col">Product</th>
+											<th scope="col">Price</th>
+											<th scope="col">
+												<div class="d-flex justify-content-around  align-items-end col-auto border-bottom "
+													style="padding: 1px;">
+													<div class="align-items-stretch">
+														<label class="mr-2">Total :</label>
+														<label class=font-weight-bold th:text="${total}"></label>
+													</div>
+												</div>
+											</th>
+										</tr>
+									</thead>
+									<tr>
+									<tr th:each="cartInfoList:${cartInfoList}">
+										<td>
+											<span th:value="${cartInfoList.cart_id}"> </span>
+											<div class="media">
+												<div class="d-flex">
+													<img src="img/product/single-product/cart-1.jpg" alt="" />
+												</div>
+
+												<div class="media-body">
+													<p th:text="${cartInfoList.product_name}"></p>
+												</div>
+											</div>
+										</td>
+										<td>
+											<h5 th:text="${cartInfoList.cart_price}"></h5>
+										</td>
+										<td>
+											<form th:action="@{/cart_info}" method="post">
+												<div class="d-flex justify-content-around  col-auto align-items-end">
+													<button type="button" class="btn btn-outline-danger" data-toggle="modal"
+														data-target="#Modal_delete">削除</button>
+												</div>
+
+												<!-- modal_delete -->
+												<div class="modal fade" id="Modal_delete" tabindex="-1" role="dialog"
+													aria-labelledby="Modal" aria-hidden="true">
+													<div class="modal-dialog modal-dialog-centered" role="document">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h5 class="modal-title text-danger font-weight-bold" id="Modal">DELETE</h5>
+																<button type="button" class="close" data-dismiss="modal" aria-label="close">
+																	<span aria-hidden="true">&times;</span>
+																</button>
+															</div>
+															<div class="modal-body text-center">
+																<label>選択した商品を削除しますか？</label>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-secondary w-20" data-dismiss="modal">Cancel</button>
+																<input type="submit" class="btn btn-outline-danger" th:action="@{/cart_info}"
+																	name="delete" value="削除">
+																<input type="hidden" name="id" th:value="${cartInfoList.cart_id}">
+															</div>
+														</div>
+													</div>
+												</div>
+												<!-- modal_delete -->
+											</form>
+										</td>
+									</tr>
+								</table>
+								<div class="d-flex justify-content-end col-md-12 col-sm-auto mr-md-4">
+									<form th:action="@{/cart_info}" method="post">
+										<button name=buy data-toggle="modal" data-target="#Modal_buy"
+											class="btn_2 bg-success align-items-stretch" type="submit">BUY</button>
+										<!-- modal_buy -->
+										<div class="modal fade" id="Modal_buy" tabindex="-1" role="dialog"
+											aria-labelledby="Modal_buy" aria-hidden="true">
+											<div class="modal-dialog modal-dialog-centered" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title text-primary font-weight-bold" id="Modal">BUY</h5>
+														<button type="button" class="close" data-dismiss="modal" aria-label="close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="modal-body text-center">
+														<label>選択した商品を購入しますか？</label>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary w-20" data-dismiss="modal">Cancel</button>
+														<input type="submit" class="btn btn-outline-primary" th:action="@{/cart_info}"
+															name="buy" value="YES!">
+														<input type="hidden" name="total" th:value="${total}">
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- modal_buy -->
+									</form>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+</body>
+
+</html>

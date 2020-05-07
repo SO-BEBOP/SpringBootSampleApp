@@ -14,8 +14,6 @@ public class BusinessTbl {
 	private int business_id;
 	@Id
 	private int business_user_id;
-	@Id
-	private int business_product_id;
 	private int business_sales;
 	private int business_state;
 	private Date create_at;

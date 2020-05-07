@@ -11,6 +11,26 @@
 
 <body>
 	<div th:fragment="productregist_contents">
+
+		<!-- breadcrumb start-->
+		<section class="breadcrumb breadcrumb_bg">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-lg-8">
+						<div class="breadcrumb_iner">
+							<div class="breadcrumb_iner_item">
+								<h2>Product regist</h2>
+								<p>
+									Home <span>-</span> Product regist
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- breadcrumb end-->
+
 		<div class="container">
 			<div
 				class="font-sans bg-white text-center my-5 mx-auto container overflow-hidden">
@@ -56,7 +76,7 @@
 					</table>
 					<div class="flex items-center justify-center">
 						<button name=createAccount
-							class="btn-lg btn-block bg-red-600 hover:bg-red-300
+							class="btn-lg btn-block btn-danger hover:bg-red-300
 								text-white font-medium py-2 px-4"
 							type="submit">Registration</button>
 					</div>

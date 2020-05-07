@@ -95,7 +95,6 @@ public class UserInfoController {
 		return "home";
 	}
 
-	// ポイント： ボタン 名 による メソッド 判定   // ユーザー 更新 用 処理.  
 	@PostMapping(value = "/user_detail", params = "update")
 	public String postUserDetailUpdate(@ModelAttribute SignupForm form,
 			Model model) {

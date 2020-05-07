@@ -11,117 +11,133 @@
 
 <body>
 	<div th:fragment="topslider_contents">
+
 		<!-- banner part start-->
 		<section class="banner_part">
 			<div class="container">
+				<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 				<div class="row align-items-center">
 					<div class="col-lg-12">
-						<div class="banner_slider owl-carousel">
+						<form method="post" enctype="plain" id="sendMessageForm"
+							target="sendMessage">
+							<div class="banner_slider owl-carousel">
 
-							<div class="single_banner_slider">
-								<div class="row">
-									<div class="banner_img d-none d-lg-block">
-										<img src="img/banner_img.png" alt="">
-									</div>
-									<div class="col-lg-5 col-md-8">
-										<div class="banner_text">
-											<div class="banner_text_iner">
-												<h1>Sample WebApp 01</h1>
-												<p>
-													This web application is a demonstration.<br> Your
-													entries do not affect your privacy, but please do not enter
-													accurate personal information.
-												</p>
-												<button class="btn_2 bg-success" name="btn_buy"
-													data-toggle="modal" data-target="#Modal">buy non</button>
+								<!-- Sample product 01 -->
+								<div class="single_banner_slider">
+									<div class="row">
+										<div class="banner_img d-none d-lg-block">
+											<img src="img/banner_img.png" alt="">
+										</div>
+										<div class="col-lg-5 col-md-8">
+											<div class="banner_text">
+												<div class="banner_text_iner">
+													<h1>Sample WebApp 01</h1>
+													<p>
+														This web application is a demonstration.<br> Your
+														entries do not affect your privacy, but please do not
+														enter accurate personal information.
+													</p>
+													<button type="submit" class="btn_2 bg-success"
+														th:value="${0}" name="productId" data-toggle="modal"
+														data-target="#Modal">buy now</button>
+												</div>
 											</div>
 										</div>
+										<div class="banner_img d-none d-lg-block">
+											<img src="img/banner_img.png" alt="">
+										</div>
 									</div>
-									<div class="banner_img d-none d-lg-block">
-										<img src="img/banner_img.png" alt="">
+								</div>
+								<!-- Sample product 01 -->
+
+								<!-- Sample product 02 -->
+								<div class="single_banner_slider">
+									<div class="row">
+										<div class="banner_img d-none d-lg-block">
+											<img src="img/banner_img.png" alt="">
+										</div>
+										<div class="col-lg-5 col-md-8">
+											<div class="banner_text">
+												<div class="banner_text_iner">
+													<h1>Sample WebApp 02</h1>
+													<p>
+														This web application is a demonstration.<br> Your
+														entries do not affect your privacy, but please do not
+														enter accurate personal information.
+													</p>
+													<button type="submit" class="btn_2 bg-success"
+														th:value="${1}" name="productId" data-toggle="modal"
+														data-target="#Modal">buy now</button>
+												</div>
+											</div>
+										</div>
+										<div class="banner_img d-none d-lg-block">
+											<img src="img/banner_img.png" alt="">
+										</div>
+									</div>
+								</div>
+								<!-- Sample product 02 -->
+
+								<!-- Sample product 03 -->
+								<div class="single_banner_slider">
+									<div class="row">
+										<div class="banner_img d-none d-lg-block">
+											<img src="img/banner_img.png" alt="">
+										</div>
+										<div class="col-lg-5 col-md-8">
+											<div class="banner_text">
+												<div class="banner_text_iner">
+													<h1>Sample WebApp 03</h1>
+													<p>
+														This web application is a demonstration.<br> Your
+														entries do not affect your privacy, but please do not
+														enter accurate personal information.
+													</p>
+													<button type="submit" class="btn_2 bg-success"
+														th:value="${2}" name="productId" data-toggle="modal"
+														data-target="#Modal">buy now</button>
+												</div>
+											</div>
+										</div>
+										<div class="banner_img d-none d-lg-block">
+											<img src="img/banner_img.png" alt="">
+										</div>
 									</div>
 								</div>
 							</div>
+							<!-- Sample product 03 -->
 
-							<div class="single_banner_slider">
-								<div class="row">
-									<div class="banner_img d-none d-lg-block">
-										<img src="img/banner_img.png" alt="">
-									</div>
-									<div class="col-lg-5 col-md-8">
-										<div class="banner_text">
-											<div class="banner_text_iner">
-												<h1>Sample WebApp 02</h1>
-												<p>
-													This web application is a demonstration.<br> Your
-													entries do not affect your privacy, but please do not enter
-													accurate personal information.
-												</p>
-												<button class="btn_2 bg-success" name="btn_buy"
-													data-toggle="modal" data-target="#Modal">buy non</button>
-											</div>
+							<!-- modal -->
+							<div class="modal fade" id="Modal" tabindex="-1" role="dialog"
+								aria-labelledby="Modal" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title  font-weight-bold" id="Modal">Add
+												to Cart</h5>
+											<button type="button" class="close" data-dismiss="modal"
+												aria-label="close">
+												<span aria-hidden="true">&times;</span>
+											</button>
 										</div>
-									</div>
-									<div class="banner_img d-none d-lg-block">
-										<img src="img/banner_img.png" alt="">
+										<div class="modal-body text-center">選択した商品をカートに追加しました。</div>
+										<div class="modal-footer">
+											<button type="button" class="productId btn btn-primary w-20"
+												data-dismiss="modal">OK</button>
+										</div>
 									</div>
 								</div>
 							</div>
-
-							<div class="single_banner_slider">
-								<div class="row">
-									<div class="banner_img d-none d-lg-block">
-										<img src="img/banner_img.png" alt="">
-									</div>
-									<div class="col-lg-5 col-md-8">
-										<div class="banner_text">
-											<div class="banner_text_iner">
-												<h1>Sample WebApp 03</h1>
-												<p>
-													This web application is a demonstration.<br> Your
-													entries do not affect your privacy, but please do not enter
-													accurate personal information.
-												</p>
-												<button class="btn_2 bg-success" name="btn_buy"
-													data-toggle="modal" data-target="#Modal">buy non</button>
-											</div>
-										</div>
-									</div>
-									<div class="banner_img d-none d-lg-block">
-										<img src="img/banner_img.png" alt="">
-									</div>
-								</div>
-							</div>
-
-						</div>
-						<!-- <div class="slider-counter"></div> -->
+							<!-- modal -->
+						</form>
+						<!-- submitでの画面遷移阻止 -->
+						<iframe name="sendMessage"
+							style="width: 0px; height: 0px; border: 0px;"></iframe>
+						<!-- submitでの画面遷移阻止 -->
 					</div>
 				</div>
 			</div>
 		</section>
-		<!-- modal -->
-		<div class="modal fade" id="Modal" tabindex="-1" role="dialog"
-			aria-labelledby="Modal" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="Modal">商品を購入しますか？</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body text-center">購入処理は後日実装予定</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary w-20"
-							data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-primary w-20"
-							data-dismiss="modal">OK!</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- modal -->
 		<!-- banner part end-->
 	</div>
 </body>
