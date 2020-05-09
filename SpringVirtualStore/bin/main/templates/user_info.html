@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
 <meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 
 <body>
@@ -21,7 +19,9 @@
 							<div class="breadcrumb_iner_item">
 								<h2>user info</h2>
 								<p>
-									Home <span>-</span> user info
+									Home
+									<span>-</span>
+									user info
 								</p>
 							</div>
 						</div>
@@ -50,8 +50,9 @@
 					<th class="info col-sm-auto">ユーザ名</th>
 					<th class="info col-sm-auto">生年月日</th>
 					<th class="info col-sm-auto">性別</th>
-					<th class="info col-sm-auto text-danger"><label
-						th:text="'合計：'+${userListCount}+'件'"> </label></th>
+					<th class="info col-sm-auto text-danger">
+						<label th:text="'合計：'+${userListCount}+'件'"> </label>
+					</th>
 				</tr>
 				<tr th:each="userMst:${userList}">
 					<td th:text="${userMst.user_id}"></td>
@@ -59,8 +60,9 @@
 					<!--ポイント１：日付型のフォーマット-->
 					<td th:text="${#dates.format(userMst.user_birthday,'YYYY/MM/dd')}"></td>
 					<td th:text="${userMst.user_gender}"></td>
-					<td><a class="btn btn-info"
-						th:href="@{'/user_detail/'+${userMst.user_id}}">詳細</a></td>
+					<td>
+						<a class="btn btn-info" th:href="@{'/user_detail/'+${userMst.user_id}}">詳細</a>
+					</td>
 				</tr>
 			</table>
 		</div>

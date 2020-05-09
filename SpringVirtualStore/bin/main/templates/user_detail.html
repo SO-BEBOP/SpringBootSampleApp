@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
 <meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 
 <body>
@@ -21,7 +19,9 @@
 							<div class="breadcrumb_iner_item">
 								<h2>user detail</h2>
 								<p>
-									Home <span>-</span> user detail
+									Home
+									<span>-</span>
+									user detail
 								</p>
 							</div>
 						</div>
@@ -34,73 +34,58 @@
 		<div class="container">
 			<div class="col-sm-auto">
 				<div
-					class="font-sans bg-white text-center my-10 mx-auto container overflow-hidden">
-					<form method="post" th:action="@{/user_detail}"
-						th:object="${signupForm}">
+					class="font-sans bg-white text-center mx-auto container overflow-hidden col-sm-auto mt-5 mb-2">
+					<form method="post" th:action="@{/user_detail}" th:object="${signupForm}">
 						<table class="table table-bordered table-hover">
-							<tr>
-								<td>
-									<div class="form-group">
-										<input type="hidden" class="form-control" th:field="*{userId}">
-									</div>
-								</td>
-							</tr>
 							<tr>
 								<th class="active">ユーザー名</th>
 								<td>
-									<div class="form-group"
-										th:classappend="${#fields.hasErrors('userName')}?'has-error'">
+									<span class="form-group hidden">
+										<input type="hidden" class="form-control" th:field="*{userId}">
+									</span>
+									<div class="form-group" th:classappend="${#fields.hasErrors('userName')}?'has-error'">
 										<input type="text" class="form-control" th:field="*{userName}" />
-										<span class="text-danger"
-											th:if="${#fields.hasErrors('userName')}"
-											th:errors="*{userName}">Error message</span>
+										<span class="text-danger" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">Error
+											message</span>
 									</div>
 								</td>
 							</tr>
-							<!-- <tr>
+							<tr>
 								<th class="active">パスワード</th>
 								<td>
-									<div class="form-group"
-										th:classappend="${#fields.hasErrors('password')}?'has-error'">
+									<div class="form-group" th:classappend="${#fields.hasErrors('password')}?'has-error'">
 										<input type="text" class="form-control" th:field="*{password}" />
-										<span class="text-danger"
-											th:if="${#fields.hasErrors('password')}"
-											th:errors="*{password}">Error message</span>
+										<span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error
+											message</span>
 									</div>
 								</td>
-							</tr> -->
+							</tr>
 							<tr>
 								<th class="active">生年月日</th>
 								<td>
-									<div class="form-group"
-										th:classappend="${#fields.hasErrors('birthday')}?'has-error'">
-										<input type="text" class="form-control"
-											placeholder="yyyy/MM/dd" th:field="*{birthday}" /> <span
-											class="text-danger" th:if="${#fields.hasErrors('birthday')}"
-											th:errors="*{birthday}">Error message</span>
+									<div class="form-group" th:classappend="${#fields.hasErrors('birthday')}?'has-error'">
+										<input type="text" class="form-control" placeholder="yyyy/MM/dd" th:field="*{birthday}" />
+										<span class="text-danger" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}">Error
+											message</span>
 									</div>
 								</td>
 							</tr>
 							<tr>
 								<th class="active">性別</th>
 								<td>
-									<div class="form-group">
-										<div th:each="item : ${radioGender}"
-											class="flex items-center justify-start">
-											<input type="radio" name="radioGender" th:text="${item.key}"
-												th:value="${item.value}" th:field="*{gender}"></input>
+									<div class="form-check-inline" th:each="item : ${radioGender}">
+										<div class="col-md-auto form-group m-10">
+											<input class="form-check-input" type="radio" name="radioGender" th:text="${item.key}"
+												th:value="${item.value}" th:field="*{gender}">
 										</div>
 									</div>
 								</td>
 							</tr>
 						</table>
-
 						<!-- 更新 ボタン -->
-						<button class="btn btn-primary btn-lg pull-right" type="submit"
-							name="update">Update</button>
+						<button class="btn btn-primary btn-lg pull-right" type="submit" name="update">Update</button>
 						<!-- 削除 ボタン -->
-						<button class="btn btn-danger btn-lg" type="submit" name="delete">
-							Delete</button>
+						<button class="btn btn-danger btn-lg" type="submit" name="delete">Delete</button>
 					</form>
 				</div>
 			</div>

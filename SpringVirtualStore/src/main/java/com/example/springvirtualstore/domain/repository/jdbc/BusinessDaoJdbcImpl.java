@@ -61,6 +61,48 @@ public class BusinessDaoJdbcImpl implements BusinessDao {
 		return businessTbl;
 	}
 
+	/*	@Override
+		public BusinessTbl selectPersonalBusiness(String userId) throws DataAccessException {
+			//１件取得
+			Map<String, Object> map = jdbc.queryForMap("SELECT * FROM business_tbl" + " WHERE business_user_id=?", userId);
+			//結果返却用の変数
+			BusinessTbl businessTbl = new BusinessTbl();
+			//取得したデータを結果返却用の変数にセットしていく
+			businessTbl.setBusiness_id((Integer) map.get("business_id"));
+			businessTbl.setBusiness_user_id((Integer) map.get("business_user_id"));
+			businessTbl.setBusiness_sales((Integer) map.get("business_sales"));
+			businessTbl.setBusiness_state((Integer) map.get("business_state"));
+			businessTbl.setCreate_at((Date) map.get("create_at"));
+			businessTbl.setUpdata_at((Date) map.get("updata_at"));
+
+			return businessTbl;
+		}
+	*/
+
+	@Override
+	public List<BusinessTbl> selectPersonalBusiness(String userId) throws DataAccessException {
+		//business_tblテーブルのデータを全件取得
+		List<Map<String, Object>> getList = jdbc
+				.queryForList("SELECT * FROM business_tbl" + " WHERE business_user_id=?", userId);
+		//結果返却用の変数
+		List<BusinessTbl> businessList = new ArrayList<>();
+		//取得したデータを結果返却用のListに格納していく
+		for (Map<String, Object> map : getList) {
+			//Businessインスタンスの生成
+			BusinessTbl businessTbl = new BusinessTbl();
+			//Businessインスタンスに取得したデータをセットする
+			businessTbl.setBusiness_id((Integer) map.get("business_id"));
+			businessTbl.setBusiness_user_id((Integer) map.get("business_user_id"));
+			businessTbl.setBusiness_sales((Integer) map.get("business_sales"));
+			businessTbl.setBusiness_state((Integer) map.get("business_state"));
+			businessTbl.setCreate_at((Date) map.get("create_at"));
+			businessTbl.setUpdata_at((Date) map.get("updata_at"));
+			//結果返却用のListに追加
+			businessList.add(businessTbl);
+		}
+		return businessList;
+	}
+
 	@Override
 	public List<BusinessTbl> selectMany() throws DataAccessException {
 		//business_tblテーブルのデータを全件取得

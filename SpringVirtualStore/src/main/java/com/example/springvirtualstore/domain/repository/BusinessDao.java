@@ -17,6 +17,8 @@ public interface BusinessDao {
 
 	public List<BusinessTbl> selectMany() throws DataAccessException;
 
+	public List<BusinessTbl> selectPersonalBusiness(String userId) throws DataAccessException;
+
 	//	public int updateOne(BusinessTbl businessTbl) throws DataAccessException;
 
 	public int deleteOne(String businessId) throws DataAccessException;
