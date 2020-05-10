@@ -64,7 +64,7 @@
 					<td th:text="${#dates.format(businessInfoList.create_at,'YYYY/MM/dd')}"></td>
 					<td>
 						<form th:action="@{/business_info}" method="post">
-							<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#Modal">削除</button>
+							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Modal">削除</button>
 
 							<!-- modal -->
 							<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="Modal"

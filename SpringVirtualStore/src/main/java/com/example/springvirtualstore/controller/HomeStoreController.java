@@ -7,7 +7,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,9 +41,12 @@ public class HomeStoreController {
 			@RequestParam String productId, Model model) {
 
 		if (userDetails == null) {
+
+			model.addAttribute("flag", true);
 			System.out.println("DEBUG >>> userDetails is NULL");
 			return "redirect:/login";
 		}
+
 		System.out.println("DEBUG >>> カート登録処理");
 		// insert用の変数     
 		CartTbl cartTbl = new CartTbl();
@@ -59,9 +61,4 @@ public class HomeStoreController {
 		return "redirect:/";
 	}
 
-	@PostMapping("/logout")
-	public String postLogout() {
-
-		return "redirect:/home";
-	}
 }

@@ -11,15 +11,18 @@ public class LoginController {
 	@GetMapping("/login")
 	public String getLogin(Model model) {
 		model.addAttribute("contents", "login :: login_contents");
-
 		return "home";
 	}
 
 	@PostMapping("/login")
 	public String postLogin(Model model) {
 		model.addAttribute("contents", "blank :: blank_contents");
-
 		return "redirect:home";
 	}
 
+	@PostMapping("/logout")
+	public String postLogout() {
+		System.out.println("<< ログアウト成功 >>");
+		return "redirect:/home";
+	}
 }

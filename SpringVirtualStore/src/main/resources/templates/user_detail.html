@@ -50,7 +50,7 @@
 									</div>
 								</td>
 							</tr>
-							<tr>
+							<tr class="nav-item dropdown" role="presentation" sec:authorize="hasRole('GENERAL')">
 								<th class="active">パスワード</th>
 								<td>
 									<div class="form-group" th:classappend="${#fields.hasErrors('password')}?'has-error'">
@@ -85,7 +85,9 @@
 						<!-- 更新 ボタン -->
 						<button class="btn btn-primary btn-lg pull-right" type="submit" name="update">Update</button>
 						<!-- 削除 ボタン -->
-						<button class="btn btn-danger btn-lg" type="submit" name="delete">Delete</button>
+						<span class="nav-item dropdown" role="presentation" sec:authorize="hasRole('ADMIN')">
+							<button class="btn btn-danger btn-lg" type="submit" name="delete">Delete</button>
+						</span>
 					</form>
 				</div>
 			</div>

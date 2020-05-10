@@ -132,6 +132,7 @@ public class UserInfoController {
 		userMst.setUser_birthday(form.getBirthday());
 		userMst.setUser_gender(form.getGender());
 
+		// パスワードは更新させない。
 		boolean result = userService.updateInfo(userMst);
 		if (result == true) {
 			model.addAttribute("result", "更新成功");
@@ -193,7 +194,9 @@ public class UserInfoController {
 		userMst.setUser_password(form.getPassword());
 		userMst.setUser_birthday(form.getBirthday());
 		userMst.setUser_gender(form.getGender());
-		userService.updateInfo(userMst);
+
+		// パスワードを更新許可
+		userService.updateOne(userMst);
 
 		return "redirect:/login";
 	}
