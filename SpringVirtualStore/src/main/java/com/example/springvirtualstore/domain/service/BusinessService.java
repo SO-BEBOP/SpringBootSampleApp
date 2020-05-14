@@ -49,6 +49,10 @@ public class BusinessService {
 		return dao.selectOne(businessId);
 	}
 
+	public List<BusinessTbl> selectPersonalBusiness(String userId) {
+		return dao.selectPersonalBusiness(userId);
+	}
+
 	//	public boolean updateOne(BusinessTbl businessTbl) throws DataAccessException {
 	//		// インスタンス 生成
 	//		DefaultTransactionDefinition def = new DefaultTransactionDefinition();

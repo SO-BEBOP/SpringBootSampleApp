@@ -10,8 +10,11 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,24 +22,33 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.springvirtualstore.domain.form.SignupForm;
 import com.example.springvirtualstore.domain.model.UserMst;
+import com.example.springvirtualstore.domain.repository.UserDetailsImpl;
 import com.example.springvirtualstore.domain.service.UserService;
+import com.example.springvirtualstore.domain.valid.GroupOrder;
 
 @Controller
 public class UserInfoController {
 
 	@Autowired
 	private UserService userService;
+	private Map<String, String> radioGender;
+
+	private Map<String, String> initRadioGender() {
+		Map<String, String> radio = new LinkedHashMap<>();
+		radio.put("Man", "man");
+		radio.put("Woman", "woman");
+		radio.put("Unselected", "unselected");
+
+		return radio;
+	}
 
 	@GetMapping("/user_info")
 	public String getUserList(Model model) {
-		//コンテンツ部分にユーザー一覧を表示するための文字列を登録
 		model.addAttribute("contents", "user_info :: userinfo_contents");
-
 		//ユーザー一覧の生成
 		List<UserMst> userList = userService.selectMany();
 		//Modelにユーザーリストを登録
 		model.addAttribute("userList", userList);
-
 		//データ件数を取得
 		int count = userService.count();
 		model.addAttribute("userListCount", count);
@@ -50,28 +62,29 @@ public class UserInfoController {
 		return getUserList(model);
 	}
 
-	//ポイント１：ラジオボタンの実装  
-	private Map<String, String> radioGender;
+	//ユーザー一覧のCSV出力用処理.  
+	@GetMapping("/userList/csv")
+	public ResponseEntity<byte[]> getUserListCsv(Model model) {
 
-	//ラジオボタンの初期化メソッド  
-	private Map<String, String> initRadioGender() {
-		Map<String, String> radio = new LinkedHashMap<>();
-		//既婚、未婚をMapに格納
-		radio.put("男性", "male");
-		radio.put("女性", "female");
-
-		return radio;
+		userService.userCsvOut();
+		byte[] bytes = null;
+		try {
+			bytes = userService.getFile("sample.csv");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//HTTPヘッダーの設定
+		HttpHeaders header = new HttpHeaders();
+		header.add("Content-Type", "text/csv;charset=UTF-8");
+		header.setContentDispositionFormData("filename", "sample.csv");
+		//sample.csvを戻す
+		return new ResponseEntity<>(bytes, header, HttpStatus.OK);
 	}
 
-	// ポイント １： 動的 URL   // ポイント ２：
+	// 管理者用
 	@GetMapping("/user_detail/{id:.+}")
 	public String getUserDetail(@ModelAttribute SignupForm form,
 			@PathVariable("id") String userId, Model model) {
-
-		//ユーザーID確認（デバッグ）
-		System.out.println("userId=" + userId);
-
-		//コンテンツ部分にユーザー詳細を表示するための文字列を登録
 		model.addAttribute("contents", "user_detail :: userdetail_contents");
 
 		//性別ステータス用ラジオボタンの初期化
@@ -96,24 +109,36 @@ public class UserInfoController {
 	}
 
 	@PostMapping(value = "/user_detail", params = "update")
-	public String postUserDetailUpdate(@ModelAttribute SignupForm form,
-			Model model) {
-		System.out.println("更新ボタンの処理");
-		System.out.println("userId=" + form.getUserId());
+	public String postUserDetailUpdate(
+			@ModelAttribute @Validated(GroupOrder.class) SignupForm form,
+			BindingResult bindingResult, Model model) {
 
+		System.out.println("更新ボタンの処理");
+		System.out.println("UP:userId=" + form.getUserId());
+
+		if (bindingResult.hasErrors()) {
+			return getUserDetail(form, String.valueOf(form.getUserId()), model);
+		}
+		System.out.println(form);
+		String gender = form.getGender();
+		if (gender == null) {
+			gender = "unselected";
+		}
 		UserMst userMst = new UserMst();
 		//フォームクラスをUserクラスに変換
 		userMst.setUser_id(form.getUserId());
 		userMst.setUser_name(form.getUserName());
+		userMst.setUser_password(form.getPassword());
 		userMst.setUser_birthday(form.getBirthday());
 		userMst.setUser_gender(form.getGender());
 
+		// パスワードは更新させない。
 		boolean result = userService.updateInfo(userMst);
 		if (result == true) {
 			model.addAttribute("result", "更新成功");
 		} else {
 			model.addAttribute("result", "更新失敗");
-		} //ユーザー一覧画面を表示
+		}
 		return getUserList(model);
 	}
 
@@ -127,27 +152,52 @@ public class UserInfoController {
 		} else {
 			model.addAttribute("result", "削除失敗");
 		}
-		//ユーザー一覧画面を表示
 		return getUserList(model);
 	}
 
-	//ユーザー一覧のCSV出力用処理.  
-	@GetMapping("/userList/csv")
-	public ResponseEntity<byte[]> getUserListCsv(Model model) {
-		//ユーザーを全件取得して、CSVをサーバーに保存する
-		userService.userCsvOut();
-		byte[] bytes = null;
-		try {//サーバーに保存されているsample.csvファイルをbyteで取得する
-			bytes = userService.getFile("sample.csv");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		//HTTPヘッダーの設定
-		HttpHeaders header = new HttpHeaders();
-		header.add("Content-Type", "text/csv;charset=UTF-8");
-		header.setContentDispositionFormData("filename", "sample.csv");
-		//sample.csvを戻す
-		return new ResponseEntity<>(bytes, header, HttpStatus.OK);
+	// 一般用
+	@GetMapping("/login_user_detail")
+	public String getLoginUserDetail(@ModelAttribute SignupForm form,
+			@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
+		model.addAttribute("contents", "user_detail :: userdetail_contents");
+
+		// ラジオボタンの初期化メソッド呼び出し
+		radioGender = initRadioGender();
+		//ラジオボタン用のMapをModelに登録
+		model.addAttribute("radioGender", radioGender);
+		//ユーザー情報を取得
+		UserMst userMst = userService.selectOne(String.valueOf(userDetails.getUserId()));
+		//Userクラスをフォームクラスに変換
+		form.setUserId(userDetails.getUserId());
+		form.setUserName(userMst.getUser_name());
+		form.setBirthday(userMst.getUser_birthday());
+		form.setGender(userMst.getUser_gender());
+		model.addAttribute("SignupForm", form);
+
+		return "home";
 	}
 
+	@PostMapping(value = "/login_user_detail", params = "update")
+	public String postUserDetailUpdate(@ModelAttribute @Validated(GroupOrder.class) SignupForm form,
+			BindingResult bindingResult, @AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
+
+		if (bindingResult.hasErrors()) {
+			return getLoginUserDetail(form, userDetails, model);
+		}
+		String gender = form.getGender();
+		if (gender == null) {
+			gender = "unselected";
+		}
+		UserMst userMst = new UserMst();
+		userMst.setUser_id(form.getUserId());
+		userMst.setUser_name(form.getUserName());
+		userMst.setUser_password(form.getPassword());
+		userMst.setUser_birthday(form.getBirthday());
+		userMst.setUser_gender(form.getGender());
+
+		// パスワードを更新許可
+		userService.updateOne(userMst);
+
+		return "redirect:/login";
+	}
 }

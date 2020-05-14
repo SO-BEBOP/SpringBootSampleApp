@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
 <meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 
 <body>
@@ -21,7 +19,9 @@
 							<div class="breadcrumb_iner_item">
 								<h2>Log in</h2>
 								<p>
-									Home <span>-</span> Log in
+									Home
+									<span>-</span>
+									Log in
 								</p>
 							</div>
 						</div>
@@ -39,10 +39,12 @@
 						<div class="login_part_text text-center">
 							<div class="login_part_text_iner">
 								<h2>
-									This web application<br> is a demonstration.
+									This web application
+									<br>
+									is a demonstration.
 								</h2>
-								<p>Your entries do not affect your privacy, but please do
-									not enter accurate personal information.</p>
+								<p>Your entries do not affect your privacy, but please do not enter accurate personal
+									information.</p>
 								<a th:href="@{'/signup'}" class="btn_3">Create an Account</a>
 							</div>
 						</div>
@@ -52,27 +54,29 @@
 							<div class="login_part_form_iner">
 								<div class="text-center">
 									<h3>
-										Welcome Back ! <br> Please Log in now
+										Welcome Back !
+										<br>
+										Please Log in now
 									</h3>
 									<div class="my-3">
-										<p
-											th:if="${ session['SPRING_SECURITY_LAST_EXCEPTION']} != null"
-											th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
-											class="text-danger">Login error message</p>
+										<p th:if="${ session['SPRING_SECURITY_LAST_EXCEPTION']} != null"
+											th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" class="text-danger">Login
+											error message</p>
 									</div>
 								</div>
 								<form class="row contact_form" action="/login" method="post">
 									<div class="col-md-12 form-group p_star">
-										<input type="text" class="form-control" id="userName"
-											name="userName" for="userName" placeholder="Username">
+										<input type="text" class="form-control" id="userName" name="userName" for="userName"
+											placeholder="Username">
 									</div>
 									<div class="col-md-12 form-group p_star">
-										<input type="password" class="form-control" id="password"
-											name="password" for="password" placeholder="Password">
+										<input type="password" class="form-control" id="password" name="password" for="password"
+											placeholder="Password">
 									</div>
+									<!--CSRF対策用トークン-->
+									<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 									<div class="col-md-12 form-group">
-										<button type="submit" value="submit" class="btn_3">
-											log in</button>
+										<button type="submit" value="submit" class="btn_3">log in</button>
 									</div>
 								</form>
 							</div>

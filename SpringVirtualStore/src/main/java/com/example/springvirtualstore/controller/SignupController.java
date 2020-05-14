@@ -27,8 +27,8 @@ public class SignupController {
 
 	//ラジオボタンの初期化メソッド  
 	private Map<String, String> initRadioGender() {
+
 		Map<String, String> radio = new LinkedHashMap<>();
-		//既婚、未婚をMapに格納
 		radio.put("Man", "man");
 		radio.put("Woman", "woman");
 		radio.put("Unselected", "unselected");

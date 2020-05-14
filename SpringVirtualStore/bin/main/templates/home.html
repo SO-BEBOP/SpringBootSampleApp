@@ -5,7 +5,9 @@
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
 <title>VirtualStore</title>
 <link rel="icon" href="img/favicon.png">
 <!-- Bootstrap CSS -->
@@ -65,17 +67,23 @@
 									<a class="nav-link dropdown-toggle" id="navbarDropdown_3" role="button"
 										data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Account </a>
 									<div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
-										<a class="dropdown-item" th:href="@{'/login'}"> login</a>
-										<a class="dropdown-item" th:href="@{'/signup'}">signup</a>
-										<a class="dropdown-item" href="checkout.html" th:href="@{'/'}">
-											<strike>account info</strike>
-										</a>
-										<a class="dropdown-item" href="blog.html" th:href="@{'/'}">
-											<strike> business info</strike>
-										</a>
+										<span class="my-2 text-danger" role="presentation" sec:authorize="isAnonymous()">
+											<a class="dropdown-item" th:href="@{'/login'}"> login</a>
+											<a class="dropdown-item" th:href="@{'/signup'}">signup</a>
+										</span>
+										<!-- Logged user only -->
+										<form role="form" id="logout" th:action="@{/logout}" method="post">
+											<span role="presentation" sec:authorize="hasRole('ADMIN') or hasRole('GENERAL')">
+												<button type="submit" class="dropdown-item" th:href="@{'/logout'}">logout</button>
+											</span>
+										</form>
+										<!-- Logged user only -->
+										<a class="dropdown-item" th:href="@{'/login_user_detail'}"> User detail </a>
+										<a class="dropdown-item" th:href="@{'general_business_info'}"> business info </a>
 									</div>
 								</li>
-								<li class="nav-item dropdown">
+								<!-- ADMIN only -->
+								<li class="nav-item dropdown" role="presentation" sec:authorize="hasRole('ADMIN')">
 									<a class="nav-link dropdown-toggle" id="navbarDropdown_2" role="button"
 										data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Adomin </a>
 									<div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
@@ -84,33 +92,44 @@
 										<a class="dropdown-item" th:href="@{'/business_info'}"> business info</a>
 									</div>
 								</li>
-								<li class="nav-item">
-									<a class="nav-link" th:href="@{'/'}">
-										<strike>Help</strike>
-									</a>
-								</li>
+								<!-- ADMIN only -->
 							</ul>
 						</div>
-
 						<div class="hearer_icon d-flex">
 							<div class="cart_area">
-								<a class="icon_btn" th:href="@{'/cart_info'}" id="cart" role="button">
-									<i class="fas fa-cart-plus" style="font-size: 20px; color: fuchsia;"></i>
-								</a>
+								<form role="form" id="logout" th:action="@{/logout}" method="post">
+									<span class="my-2 text-danger" role="presentation" sec:authorize="isAnonymous()">
+										<a class="btn-sm btn btn-outline-success" th:href="@{'/login'}">Login</a>
+										<a class="btn-sm btn btn-outline-warning" th:href="@{'/signup'}">Signup</a>
+									</span>
+									<span role="presentation" sec:authorize="hasRole('ADMIN') or hasRole('GENERAL')">
+										<button type="submit" class="btn-sm btn btn-outline-danger" th:href="@{'/logout'}">Logout</button>
+									</span>
+									<a class="icon_btn" th:href="@{'/cart_info'}" id="cart" role="button">
+										<i class="fas fa-cart-plus" style="font-size: 20px; color: fuchsia;"></i>
+									</a>
+								</form>
 							</div>
 						</div>
-
 					</nav>
+					<!-- ログインユーザ確認表示 -->
+					<div>
+						<h4 class="text-center text-xl-left ml-xl-4 my-2">
+							<span class="my-2 text-danger" role="presentation" sec:authorize="isAnonymous()">
+								Please log in or sign up. </span>
+						</h4>
+						<span class="float-right my-2 ml-md-3" role="presentation"
+							sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_GENERAL')">
+							Logged user : [
+							<span sec:authentication="name"></span>
+							]
+							<br>
+							Roles :
+							<span sec:authentication="principal.authorities"></span>
+						</span>
+					</div>
+					<!-- ログインユーザ確認表示 -->
 				</div>
-			</div>
-		</div>
-		<div class="search_input" id="search_input_box">
-			<div class="container ">
-				<form class="d-flex justify-content-between search-inner">
-					<input type="text" class="form-control" id="search_input" placeholder="Search Here">
-					<button type="submit" class="btn"></button>
-					<span class="ti-close" id="close_search" title="Close Search"></span>
-				</form>
 			</div>
 		</div>
 	</header>
@@ -125,99 +144,55 @@
 	<!--::footer_part start::-->
 	<footer class="footer_part">
 		<div class="container">
-			<div class="row justify-content-around">
-				<div class="col-sm-6 col-lg-2">
+			<div class="row justify-content-center align-items-stretch">
+				<div class="col-sm-3 col-lg-2">
 					<div class="single_footer_part">
-						<h4>Top Products</h4>
+						<h4>Shop</h4>
 						<ul class="list-unstyled">
 							<li>
-								<a href="">Managed Website</a>
-							</li>
-							<li>
-								<a href="">Manage Reputation</a>
-							</li>
-							<li>
-								<a href="">Power Tools</a>
-							</li>
-							<li>
-								<a href="">Marketing Service</a>
+								<a th:href="@{'/'}">
+									<strike>Product details</strike>
+								</a>
 							</li>
 						</ul>
 					</div>
 				</div>
-				<div class="col-sm-6 col-lg-2">
+				<div class="col-sm-3 col-lg-2">
 					<div class="single_footer_part">
-						<h4>Quick Links</h4>
+						<h4>Account</h4>
 						<ul class="list-unstyled">
 							<li>
-								<a href="">Jobs</a>
+								<a th:href="@{'/signup'}">Signup</a>
 							</li>
 							<li>
-								<a href="">Brand Assets</a>
+								<a th:href="@{'/login_user_detail'}"> User detail </a>
 							</li>
 							<li>
-								<a href="">Investor Relations</a>
-							</li>
-							<li>
-								<a href="">Terms of Service</a>
+								<a th:href="@{'general_business_info'}"> Business info </a>
 							</li>
 						</ul>
 					</div>
 				</div>
-				<div class="col-sm-6 col-lg-2">
+				<div class="col-sm-3 col-lg-2">
 					<div class="single_footer_part">
-						<h4>Features</h4>
-						<ul class="list-unstyled">
-							<li>
-								<a href="">Jobs</a>
-							</li>
-							<li>
-								<a href="">Brand Assets</a>
-							</li>
-							<li>
-								<a href="">Investor Relations</a>
-							</li>
-							<li>
-								<a href="">Terms of Service</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-sm-6 col-lg-2">
-					<div class="single_footer_part">
-						<h4>Resources</h4>
-						<ul class="list-unstyled">
-							<li>
-								<a href="">Guides</a>
-							</li>
-							<li>
-								<a href="">Research</a>
-							</li>
-							<li>
-								<a href="">Experts</a>
-							</li>
-							<li>
-								<a href="">Agencies</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-sm-6 col-lg-4">
-					<div class="single_footer_part">
-						<h4>Newsletter</h4>
-						<p>Heaven fruitful doesn't over lesser in days. Appear creeping</p>
-						<div id="mc_embed_signup">
-							<form target="_blank"
-								action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-								method="get" class="subscribe_form relative mail_part">
-								<input type="email" name="email" id="newsletter-form-email" placeholder="Email Address"
-									class="placeholder hide-on-focus" onfocus="this.placeholder = ''"
-									onblur="this.placeholder = ' Email Address '">
-								<button type="submit" name="submit" id="newsletter-submit"
-									class="email_icon newsletter-submit button-contactForm">subscribe</button>
-								<div class="mt-10 info"></div>
-							</form>
+						<h4>Admin</h4>
+						<div role="presentation" sec:authorize="hasRole('GENERAL')">
+							<label> Only admin users can work with managed content.</label>
 						</div>
+						<div role="presentation" sec:authorize="hasRole('GENERAL')">
+							<label> Only admin users can work with managed content.</label>
+						</div>
+						<ul class="list-unstyled" role="presentation" sec:authorize="hasRole('ADMIN')">
+							<li>
+								<a th:href="@{'/user_info'}"> Account info</a>
+							</li>
+							<li>
+								<a th:href="@{'/products_info'}"> Product info</a>
+							</li>
+							<li>
+								<a th:href="@{'/business_info'}"> Business info</a>
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -225,27 +200,24 @@
 
 		<div class="copyright_part">
 			<div class="container">
-				<div class="row">
-					<div class="col-lg-8">
-						<div class="copyright_text">
-							<P>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-								Copyright &copy;
-								<script>
-									document.write(new Date().getFullYear());
-								</script>
-								All rights reserved | This template is made with
-								<i class="ti-heart" aria-hidden="true"></i>
-								by
-								<a href="https://colorlib.com" target="_blank">Colorlib</a>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							</P>
-						</div>
+				<div class="row justify-content-center">
+					<div class="copyright_text">
+						<P>
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							Copyright &copy;
+							<script>
+								document.write(new Date().getFullYear());
+							</script>
+							All rights reserved | This template is made with
+							<i class="ti-heart" aria-hidden="true"></i>
+							by
+							<a href="https://colorlib.com" target="_blank">Colorlib</a>
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</P>
 					</div>
 				</div>
 			</div>
 		</div>
-
 	</footer>
 	<!--::footer_part end::-->
 

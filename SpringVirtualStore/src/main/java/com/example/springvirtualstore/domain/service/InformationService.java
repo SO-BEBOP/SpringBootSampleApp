@@ -49,7 +49,29 @@ public class InformationService {
 			System.out.println(">> DEBUG : " + businessInfoList);
 		}
 		return businessInfoList;
+	}
 
+	public List<BusinessInfo> gePersonalBusinessInfoList(String userId) {
+
+		List<BusinessTbl> businessTblAll = businessService.selectPersonalBusiness(userId);
+		List<BusinessInfo> businessInfoList = new ArrayList<>();
+
+		for (BusinessTbl business : businessTblAll) {
+			BusinessInfo businessInfo = new BusinessInfo();
+			UserMst user = userService.selectOne(Integer.valueOf(business.getBusiness_user_id()).toString());
+
+			businessInfo.setBusiness_id(business.getBusiness_id());
+			businessInfo.setUser_name(user.getUser_name());
+			businessInfo.setBusiness_sales(business.getBusiness_sales());
+			businessInfo.setBusiness_state(business.getBusiness_state());
+			businessInfo.setCreate_at(business.getCreate_at());
+			businessInfo.setCreate_at(business.getUpdata_at());
+
+			businessInfoList.add(businessInfo);
+
+			System.out.println(">> DEBUG : " + businessInfoList);
+		}
+		return businessInfoList;
 	}
 
 	public List<CartInfo> getUserCartInfoList(Integer userId) {

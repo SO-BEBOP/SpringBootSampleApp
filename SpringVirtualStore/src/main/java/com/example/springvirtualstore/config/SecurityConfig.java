@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -48,8 +47,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/").permitAll()
 				.antMatchers("/login").permitAll()
 				.antMatchers("/home").permitAll()
-				.antMatchers("/management").permitAll()
 				.antMatchers("/signup").permitAll()
+
+				// アクセス権限設定
+				//	.antMatchers("/products_info").hasAuthority("ROLE_ ADMIN")
 
 				//それ以外は直リンク禁止
 				.anyRequest().authenticated();
@@ -65,19 +66,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				//ログインページのユーザー名
 				.usernameParameter("userName")
 				//ログインページのパスワード
-				.passwordParameter("password")
-				//ログイン成功後の遷移先
-				.defaultSuccessUrl("/", true);
+				.passwordParameter("password");
+		//ログイン成功後の遷移先指定
+		//	.defaultSuccessUrl("/", true);
 
 		http
 				.logout()
-				.logoutRequestMatcher(
-						new AntPathRequestMatcher("/logout"))
-				.logoutUrl("/logout")
-				.logoutSuccessUrl("/");
 
-		// CSRF 対策 を 無効 に 設定（ 一時的）
-		http.csrf().disable();
+				.logoutUrl("/logout")
+				.logoutSuccessUrl("/login");
+
+		// CSRF対策を無効に設定（ 一時的）
+		//	http.csrf().disable();
+
 	}
 
 	// DefaultのUserDetailsを使う場合

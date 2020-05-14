@@ -7,7 +7,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,9 +22,17 @@ public class HomeStoreController {
 	private CartService cartService;
 
 	@GetMapping("/")
-	public String getHomeStore(Principal principal, @AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
+	public String getHomeStore(Principal principal,
+			@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
 		model.addAttribute("contents", "top_slider :: topslider_contents");
 
+		if (userDetails != null) {
+			System.out.println(
+					"DEBUG UserDetails >>> " + userDetails.getUserId() + " / " + userDetails.getUsername() + " / "
+							+ userDetails.getPassword());
+		} else {
+			System.out.println("DEBUG >>>" + "Not logged in.");
+		}
 		return "/home";
 	}
 
@@ -34,15 +41,18 @@ public class HomeStoreController {
 			@RequestParam String productId, Model model) {
 
 		if (userDetails == null) {
+
+			model.addAttribute("flag", true);
 			System.out.println("DEBUG >>> userDetails is NULL");
 			return "redirect:/login";
 		}
+
 		System.out.println("DEBUG >>> カート登録処理");
 		// insert用の変数     
 		CartTbl cartTbl = new CartTbl();
 		cartTbl.setCart_user_id(userDetails.getUserId());
 		cartTbl.setCart_product_id(Integer.valueOf(productId));
-		boolean result = cartService.insert(cartTbl); // 登録結果の判定
+		boolean result = cartService.insert(cartTbl);
 		if (result == true) {
 			System.out.println("insert成功");
 		} else {
@@ -51,15 +61,4 @@ public class HomeStoreController {
 		return "redirect:/";
 	}
 
-	@PostMapping("/logout")
-	public String postLogout() {
-
-		return "redirect:/home";
-	}
-
-	// TODO 購入処理
-	@PostMapping("/")
-	public void postBuyBtnRequest(@RequestParam() String str, Model model) {
-
-	}
 }
