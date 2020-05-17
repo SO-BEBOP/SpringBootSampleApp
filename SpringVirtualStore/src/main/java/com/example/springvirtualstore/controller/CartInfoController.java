@@ -44,10 +44,6 @@ public class CartInfoController {
 		}
 		model.addAttribute("total", totalPrice);
 
-		//		//データ件数を取得
-		//		int count = cartService.count();
-		//		model.addAttribute("cartListCount", count);
-
 		return "home";
 	}
 
