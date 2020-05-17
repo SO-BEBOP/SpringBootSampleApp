@@ -61,7 +61,9 @@
 					<td th:text="${#dates.format(userMst.user_birthday,'YYYY/MM/dd')}"></td>
 					<td th:text="${userMst.user_gender}"></td>
 					<td>
-						<a class="btn btn-info" th:href="@{'/user_detail/'+${userMst.user_id}}">詳細</a>
+						<form method="get" th:action="@{/user_detail}">
+							<button type="submit" name="userId" class="btn btn-info" th:value="${userMst.user_id}">詳細</button>
+						</form>
 					</td>
 				</tr>
 			</table>

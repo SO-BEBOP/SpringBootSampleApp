@@ -17,8 +17,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.springvirtualstore.domain.form.SignupForm;
 import com.example.springvirtualstore.domain.model.UserMst;
@@ -56,13 +58,105 @@ public class UserInfoController {
 		return "home";
 	}
 
+	@RequestMapping(value = "/user_detail", method = RequestMethod.GET)
+	public String getUserDetail(@ModelAttribute SignupForm form,
+			@RequestParam(name = "userId", defaultValue = "non") String userId,
+			@AuthenticationPrincipal UserDetailsImpl userDetails,
+			Model model) {
+		model.addAttribute("contents", "user_detail :: userdetail_contents");
+
+		if (userId.equals("non")) {
+			userId = String.valueOf(userDetails.getUserId());
+		}
+
+		//性別ステータス用ラジオボタンの初期化
+		radioGender = initRadioGender();
+		//ラジオボタン用のMapをModelに登録
+		model.addAttribute("radioGender", radioGender);
+		//ユーザーIDのチェック
+		if (userId != null && userId.length() > 0) {
+			//ユーザー情報を取得
+			UserMst userMst = userService.selectOne(userId);
+			//Userクラスをフォームクラスに変換
+			form.setUserId(Integer.parseInt(userId));
+			form.setUserName(userMst.getUser_name());
+			if (userDetails.getAuthorities().toString().equals("[ROLE_ADMIN]")) {
+				form.setPassword("CannotChanged");
+			}
+			form.setBirthday(userMst.getUser_birthday());
+			form.setGender(userMst.getUser_gender());
+			//Modelに登録
+			model.addAttribute("SignupForm", form);
+		}
+		return "home";
+	}
+
+	@PostMapping(value = "/user_detail", params = "update")
+	public String postUserDetailUpdate(
+			@ModelAttribute @Validated(GroupOrder.class) SignupForm form,
+			@AuthenticationPrincipal UserDetailsImpl userDetails,
+			BindingResult bindingResult, Model model) {
+
+		// 結果判定変数
+		boolean result = false;
+		System.out.println("更新ボタンの処理");
+		System.out.println("UP:userId=" + form.getUserId());
+
+		if (bindingResult.hasErrors()) {
+			return getUserDetail(form, String.valueOf(form.getUserId()), userDetails, model);
+		}
+		System.out.println(form);
+		String gender = form.getGender();
+		if (gender == null) {
+			gender = "unselected";
+		}
+		UserMst userMst = new UserMst();
+		//フォームクラスをUserクラスに変換
+		userMst.setUser_id(form.getUserId());
+		userMst.setUser_name(form.getUserName());
+		userMst.setUser_password(form.getPassword());
+		userMst.setUser_birthday(form.getBirthday());
+		userMst.setUser_gender(form.getGender());
+
+		// 管理者は処理後リストへ遷移。
+		if (userDetails.getAuthorities().toString().equals("[ROLE_ADMIN]")) {
+			// 既存のパスワードを更新させない。
+			result = userService.updateInfo(userMst);
+			if (result == true) {
+				model.addAttribute("result", "更新成功");
+				return getUserList(model);
+			} else {
+				model.addAttribute("result", "更新失敗");
+				return getUserList(model);
+			}
+		} else {
+			// パスワードを更新する。
+			result = userService.updateOne(userMst);
+		}
+		// 一般ユーザはhomeへ遷移。
+		return "redirect:/";
+	}
+
+	@PostMapping(value = "/user_detail", params = "delete")
+	public String postUserDetailDelete(@ModelAttribute SignupForm form, Model model) {
+		System.out.println("削除ボタンの処理");
+		boolean result = userService.deleteOne(String.valueOf(form.getUserId()));
+		if (result == true) {
+			model.addAttribute("result", "削除成功");
+		} else {
+			model.addAttribute("result", "削除失敗");
+		}
+		return getUserList(model);
+	}
+
+	//ユーザー一覧のCSV出力用処理 TODO
 	@GetMapping("/user_info/csv")
 	public String userCsvOut(Model model) throws DataAccessException {
 		// 拡張用 
 		return getUserList(model);
 	}
 
-	//ユーザー一覧のCSV出力用処理.  
+	//ユーザー一覧のCSV出力用処理 TODO
 	@GetMapping("/userList/csv")
 	public ResponseEntity<byte[]> getUserListCsv(Model model) {
 
@@ -81,123 +175,4 @@ public class UserInfoController {
 		return new ResponseEntity<>(bytes, header, HttpStatus.OK);
 	}
 
-	// 管理者用
-	@GetMapping("/user_detail/{id:.+}")
-	public String getUserDetail(@ModelAttribute SignupForm form,
-			@PathVariable("id") String userId, Model model) {
-		model.addAttribute("contents", "user_detail :: userdetail_contents");
-
-		//性別ステータス用ラジオボタンの初期化
-		radioGender = initRadioGender();
-		//ラジオボタン用のMapをModelに登録
-		model.addAttribute("radioGender", radioGender);
-		//ユーザーIDのチェック
-		if (userId != null && userId.length() > 0) {
-			//ユーザー情報を取得
-			UserMst userMst = userService.selectOne(userId);
-			//Userクラスをフォームクラスに変換
-			form.setUserId(Integer.parseInt(userId));
-			form.setUserName(userMst.getUser_name());
-			form.setBirthday(userMst.getUser_birthday());
-			form.setGender(userMst.getUser_gender());
-
-			//Modelに登録
-			model.addAttribute("SignupForm", form);
-
-		}
-		return "home";
-	}
-
-	@PostMapping(value = "/user_detail", params = "update")
-	public String postUserDetailUpdate(
-			@ModelAttribute @Validated(GroupOrder.class) SignupForm form,
-			BindingResult bindingResult, Model model) {
-
-		System.out.println("更新ボタンの処理");
-		System.out.println("UP:userId=" + form.getUserId());
-
-		if (bindingResult.hasErrors()) {
-			return getUserDetail(form, String.valueOf(form.getUserId()), model);
-		}
-		System.out.println(form);
-		String gender = form.getGender();
-		if (gender == null) {
-			gender = "unselected";
-		}
-		UserMst userMst = new UserMst();
-		//フォームクラスをUserクラスに変換
-		userMst.setUser_id(form.getUserId());
-		userMst.setUser_name(form.getUserName());
-		userMst.setUser_password(form.getPassword());
-		userMst.setUser_birthday(form.getBirthday());
-		userMst.setUser_gender(form.getGender());
-
-		// パスワードは更新させない。
-		boolean result = userService.updateInfo(userMst);
-		if (result == true) {
-			model.addAttribute("result", "更新成功");
-		} else {
-			model.addAttribute("result", "更新失敗");
-		}
-		return getUserList(model);
-	}
-
-	//ユーザー削除用処理.
-	@PostMapping(value = "/user_detail", params = "delete")
-	public String postUserDetailDelete(@ModelAttribute SignupForm form, Model model) {
-		System.out.println("削除ボタンの処理");
-		boolean result = userService.deleteOne(String.valueOf(form.getUserId()));
-		if (result == true) {
-			model.addAttribute("result", "削除成功");
-		} else {
-			model.addAttribute("result", "削除失敗");
-		}
-		return getUserList(model);
-	}
-
-	// 一般用
-	@GetMapping("/login_user_detail")
-	public String getLoginUserDetail(@ModelAttribute SignupForm form,
-			@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
-		model.addAttribute("contents", "user_detail :: userdetail_contents");
-
-		// ラジオボタンの初期化メソッド呼び出し
-		radioGender = initRadioGender();
-		//ラジオボタン用のMapをModelに登録
-		model.addAttribute("radioGender", radioGender);
-		//ユーザー情報を取得
-		UserMst userMst = userService.selectOne(String.valueOf(userDetails.getUserId()));
-		//Userクラスをフォームクラスに変換
-		form.setUserId(userDetails.getUserId());
-		form.setUserName(userMst.getUser_name());
-		form.setBirthday(userMst.getUser_birthday());
-		form.setGender(userMst.getUser_gender());
-		model.addAttribute("SignupForm", form);
-
-		return "home";
-	}
-
-	@PostMapping(value = "/login_user_detail", params = "update")
-	public String postUserDetailUpdate(@ModelAttribute @Validated(GroupOrder.class) SignupForm form,
-			BindingResult bindingResult, @AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
-
-		if (bindingResult.hasErrors()) {
-			return getLoginUserDetail(form, userDetails, model);
-		}
-		String gender = form.getGender();
-		if (gender == null) {
-			gender = "unselected";
-		}
-		UserMst userMst = new UserMst();
-		userMst.setUser_id(form.getUserId());
-		userMst.setUser_name(form.getUserName());
-		userMst.setUser_password(form.getPassword());
-		userMst.setUser_birthday(form.getBirthday());
-		userMst.setUser_gender(form.getGender());
-
-		// パスワードを更新許可
-		userService.updateOne(userMst);
-
-		return "redirect:/login";
-	}
 }

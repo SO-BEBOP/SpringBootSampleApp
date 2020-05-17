@@ -31,8 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		// ポイント ３： 直 リンク の 禁止 
-		// ログイン 不要 ページ の 設定 
+		// ログイン不要ページの設定 
 		http
 				.authorizeRequests()
 				.antMatchers("/webjars/**").permitAll()
@@ -41,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/img/**").permitAll()
 				.antMatchers("/sass/**").permitAll()
 				.antMatchers("/webfonts/**").permitAll()
+				.antMatchers("/fonts/**").permitAll()
 				.antMatchers("/fonts/**").permitAll()
 
 				//権限無し直リンク許可
@@ -72,13 +72,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http
 				.logout()
-
 				.logoutUrl("/logout")
 				.logoutSuccessUrl("/login");
 
 		// CSRF対策を無効に設定（ 一時的）
 		//	http.csrf().disable();
 
+		// CSRFを無効にするURLを 設定     
+		//		RequestMatcher csrfMatcher = new RestMatcher("/user_info/∗∗");
+		//RESTのみCSRF対策を無効に設定
+		//		http.csrf().requireCsrfProtectionMatcher(csrfMatcher);
 	}
 
 	// DefaultのUserDetailsを使う場合

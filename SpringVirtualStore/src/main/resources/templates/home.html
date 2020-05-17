@@ -78,7 +78,7 @@
 											</span>
 										</form>
 										<!-- Logged user only -->
-										<a class="dropdown-item" th:href="@{'/login_user_detail'}"> User detail </a>
+										<a class="dropdown-item" th:href="@{'/user_detail'}"> User detail </a>
 										<a class="dropdown-item" th:href="@{'general_business_info'}"> business info </a>
 									</div>
 								</li>
@@ -165,7 +165,7 @@
 								<a th:href="@{'/signup'}">Signup</a>
 							</li>
 							<li>
-								<a th:href="@{'/login_user_detail'}"> User detail </a>
+								<a th:href="@{'/user_detail'}"> User detail </a>
 							</li>
 							<li>
 								<a th:href="@{'general_business_info'}"> Business info </a>
@@ -176,10 +176,7 @@
 				<div class="col-sm-3 col-lg-2">
 					<div class="single_footer_part">
 						<h4>Admin</h4>
-						<div role="presentation" sec:authorize="hasRole('GENERAL')">
-							<label> Only admin users can work with managed content.</label>
-						</div>
-						<div role="presentation" sec:authorize="hasRole('GENERAL')">
+						<div role="presentation" sec:authorize="hasRole('GENERAL') or isAnonymous()">
 							<label> Only admin users can work with managed content.</label>
 						</div>
 						<ul class="list-unstyled" role="presentation" sec:authorize="hasRole('ADMIN')">
