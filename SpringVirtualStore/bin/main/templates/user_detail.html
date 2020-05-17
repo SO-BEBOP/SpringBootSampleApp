@@ -44,7 +44,10 @@
 										<input type="hidden" class="form-control" th:field="*{userId}">
 									</span>
 									<div class="form-group" th:classappend="${#fields.hasErrors('userName')}?'has-error'">
-										<input type="text" class="form-control" th:field="*{userName}" />
+										<input type="text" class="form-control" th:field="*{userName}" readonly
+											role="presentation" sec:authorize="hasRole('ADMIN')" />
+										<input type="text" class="form-control" th:field="*{userName}" role="presentation"
+											sec:authorize="hasRole('GENERAL')" />
 										<span class="text-danger" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">Error
 											message</span>
 									</div>

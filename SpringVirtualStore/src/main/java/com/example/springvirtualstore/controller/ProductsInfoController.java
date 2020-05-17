@@ -38,12 +38,6 @@ public class ProductsInfoController {
 		return "home";
 	}
 
-	@GetMapping("/products_info/csv")
-	public String productCsvOut(Model model) throws DataAccessException {
-		// 拡張用 
-		return getProductList(model);
-	}
-
 	@RequestMapping(value = "/products_detail", method = RequestMethod.GET)
 	public String getProductDetail(@ModelAttribute ProductRegistForm form,
 			@RequestParam(name = "productId", defaultValue = "non") String productId, Model model) {
@@ -101,6 +95,12 @@ public class ProductsInfoController {
 			model.addAttribute("result", "削除失敗");
 		}
 		//商品一覧画面を表示
+		return getProductList(model);
+	}
+
+	@GetMapping("/products_info/csv")
+	public String productCsvOut(Model model) throws DataAccessException {
+		// 拡張用 
 		return getProductList(model);
 	}
 }

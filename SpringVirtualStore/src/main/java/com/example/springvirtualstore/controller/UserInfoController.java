@@ -1,15 +1,11 @@
 package com.example.springvirtualstore.controller;
 
-import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -149,30 +145,30 @@ public class UserInfoController {
 		return getUserList(model);
 	}
 
-	//ユーザー一覧のCSV出力用処理 TODO
+	//ユーザー一覧のCSV出力用処理
 	@GetMapping("/user_info/csv")
 	public String userCsvOut(Model model) throws DataAccessException {
 		// 拡張用 
 		return getUserList(model);
 	}
 
-	//ユーザー一覧のCSV出力用処理 TODO
-	@GetMapping("/userList/csv")
-	public ResponseEntity<byte[]> getUserListCsv(Model model) {
-
-		userService.userCsvOut();
-		byte[] bytes = null;
-		try {
-			bytes = userService.getFile("sample.csv");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		//HTTPヘッダーの設定
-		HttpHeaders header = new HttpHeaders();
-		header.add("Content-Type", "text/csv;charset=UTF-8");
-		header.setContentDispositionFormData("filename", "sample.csv");
-		//sample.csvを戻す
-		return new ResponseEntity<>(bytes, header, HttpStatus.OK);
-	}
+	//	//ユーザー一覧のCSV出力用処理
+	//	@GetMapping("/userList/csv")
+	//	public ResponseEntity<byte[]> getUserListCsv(Model model) {
+	//
+	//		userService.userCsvOut();
+	//		byte[] bytes = null;
+	//		try {
+	//			bytes = userService.getFile("sample.csv");
+	//		} catch (IOException e) {
+	//			e.printStackTrace();
+	//		}
+	//		//HTTPヘッダーの設定
+	//		HttpHeaders header = new HttpHeaders();
+	//		header.add("Content-Type", "text/csv;charset=UTF-8");
+	//		header.setContentDispositionFormData("filename", "sample.csv");
+	//		//sample.csvを戻す
+	//		return new ResponseEntity<>(bytes, header, HttpStatus.OK);
+	//	}
 
 }

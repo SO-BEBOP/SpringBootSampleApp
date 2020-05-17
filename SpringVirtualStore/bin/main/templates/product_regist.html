@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
 <meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 
 <body>
@@ -21,7 +19,9 @@
 							<div class="breadcrumb_iner_item">
 								<h2>Product regist</h2>
 								<p>
-									Home <span>-</span> Product regist
+									Home
+									<span>-</span>
+									Product regist
 								</p>
 							</div>
 						</div>
@@ -32,19 +32,15 @@
 		<!-- breadcrumb end-->
 
 		<div class="container">
-			<div
-				class="font-sans bg-white text-center my-5 mx-auto container overflow-hidden">
-				<form method="post" th:action="@{/product_regist}"
-					th:object="${productRegistForm}">
+			<div class="font-sans bg-white text-center my-5 mx-auto container overflow-hidden">
+				<form method="post" th:action="@{/product_regist}" th:object="${productRegistForm}">
 					<table class="table table-bordered table-hover">
 						<tr>
 							<th class="active">商品名</th>
 							<td>
-								<div class="form-group"
-									th:classappend="${#fields.hasErrors('productName')}?'has-error'">
-									<input type="text" class="form-control"
-										th:field="*{productName}" /> <span class="text-danger"
-										th:if="${#fields.hasErrors('productName')}"
+								<div class="form-group" th:classappend="${#fields.hasErrors('productName')}?'has-error'">
+									<input type="text" class="form-control" th:field="*{productName}" />
+									<span class="text-danger" th:if="${#fields.hasErrors('productName')}"
 										th:errors="*{productName}">Error message</span>
 								</div>
 							</td>
@@ -52,11 +48,9 @@
 						<tr>
 							<th class="active">価格</th>
 							<td>
-								<div class="form-group"
-									th:classappend="${#fields.hasErrors('price')}?'has-error'">
-									<input type="number" class="form-control" th:field="*{price}"
-										min="0" /> <span class="text-danger"
-										th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Error
+								<div class="form-group" th:classappend="${#fields.hasErrors('price')}?'has-error'">
+									<input type="number" class="form-control" th:field="*{price}" min="0" />
+									<span class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Error
 										message</span>
 								</div>
 							</td>
@@ -64,11 +58,9 @@
 						<tr>
 							<th class="active">在庫</th>
 							<td>
-								<div class="form-group"
-									th:classappend="${#fields.hasErrors('stock')}?'has-error'">
-									<input type="number" class="form-control" th:field="*{stock}"
-										min="0" /> <span class="text-danger"
-										th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}">Error
+								<div class="form-group" th:classappend="${#fields.hasErrors('stock')}?'has-error'">
+									<input type="number" class="form-control" th:field="*{stock}" min="0" />
+									<span class="text-danger" th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}">Error
 										message</span>
 								</div>
 							</td>
