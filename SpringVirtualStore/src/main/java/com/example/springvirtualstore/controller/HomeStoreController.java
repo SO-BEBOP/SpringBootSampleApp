@@ -28,20 +28,19 @@ public class HomeStoreController {
 
 		if (userDetails != null) {
 			System.out.println(
-					"DEBUG UserDetails >>> " + userDetails.getUserId() + " / " + userDetails.getUsername() + " / "
-							+ userDetails.getPassword());
+					"DEBUG UserDetails >>> " + userDetails.getUserId()
+							+ " / " + userDetails.getUsername() + " / " + userDetails.getPassword());
 		} else {
 			System.out.println("DEBUG >>>" + "Not logged in.");
 		}
 		return "/home";
 	}
 
-	@RequestMapping(value = "/", params = "productId", method = RequestMethod.POST)
+	@RequestMapping(value = "/addcart", params = "productId", method = RequestMethod.POST)
 	public String postAddCart(@AuthenticationPrincipal UserDetailsImpl userDetails,
 			@RequestParam String productId, Model model) {
 
 		if (userDetails == null) {
-
 			model.addAttribute("flag", true);
 			System.out.println("DEBUG >>> userDetails is NULL");
 			return "redirect:/login";

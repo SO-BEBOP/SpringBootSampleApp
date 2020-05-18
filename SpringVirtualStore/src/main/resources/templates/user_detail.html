@@ -44,17 +44,23 @@
 										<input type="hidden" class="form-control" th:field="*{userId}">
 									</span>
 									<div class="form-group" th:classappend="${#fields.hasErrors('userName')}?'has-error'">
-										<input type="text" class="form-control" th:field="*{userName}" />
+										<input type="text" class="form-control" th:field="*{userName}" readonly
+											role="presentation" sec:authorize="hasRole('ADMIN')" />
+										<input type="text" class="form-control" th:field="*{userName}" role="presentation"
+											sec:authorize="hasRole('GENERAL')" />
 										<span class="text-danger" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">Error
 											message</span>
 									</div>
 								</td>
 							</tr>
-							<tr class="nav-item dropdown" role="presentation" sec:authorize="hasRole('GENERAL')">
+							<tr class="nav-item dropdown">
 								<th class="active">パスワード</th>
 								<td>
 									<div class="form-group" th:classappend="${#fields.hasErrors('password')}?'has-error'">
-										<input type="text" class="form-control" th:field="*{password}" />
+										<input type="text" class="form-control" th:field="*{password}" role="presentation"
+											sec:authorize="hasRole('GENERAL')" />
+										<input type="text" class="form-control" th:field="*{password}" readonly
+											role="presentation" sec:authorize="hasRole('ADMIN')" />
 										<span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error
 											message</span>
 									</div>

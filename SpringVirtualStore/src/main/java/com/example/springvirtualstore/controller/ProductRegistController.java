@@ -46,8 +46,7 @@ public class ProductRegistController {
 		} else {
 			System.out.println("insert失敗");
 		}
-
-		return "redirect:/product_regist";
+		return "redirect:/products_info";
 	}
 
 }

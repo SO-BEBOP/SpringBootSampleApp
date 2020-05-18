@@ -8,8 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.springvirtualstore.domain.form.ProductRegistForm;
 import com.example.springvirtualstore.domain.model.ProductMst;
@@ -23,16 +25,12 @@ public class ProductsInfoController {
 
 	@GetMapping("/products_info")
 	public String getProductList(Model model) {
-
 		//コンテンツ部分に商品一覧を表示するための文字列を登録
 		model.addAttribute("contents", "products_info :: productinfo_contents");
-
 		//商品一覧の生成
 		List<ProductMst> productList = productService.selectMany();
-
 		//Modelに商品リストを登録
 		model.addAttribute("productList", productList);
-
 		//データ件数を取得
 		int count = productService.count();
 		model.addAttribute("productListCount", count);
@@ -40,15 +38,10 @@ public class ProductsInfoController {
 		return "home";
 	}
 
-	@GetMapping("/products_info/csv")
-	public String productCsvOut(Model model) throws DataAccessException {
-		// 拡張用 
-		return getProductList(model);
-	}
-
-	@GetMapping("/products_detail/{id:.+}")
+	@RequestMapping(value = "/products_detail", method = RequestMethod.GET)
 	public String getProductDetail(@ModelAttribute ProductRegistForm form,
-			@PathVariable("id") String productId, Model model) {
+			@RequestParam(name = "productId", defaultValue = "non") String productId, Model model) {
+
 		//商品ID確認（デバッグ）
 		System.out.println("productId=" + productId);
 		//コンテンツ部分に商品詳細を表示するための文字列を登録
@@ -63,10 +56,8 @@ public class ProductsInfoController {
 			form.setProductName(productMst.getProduct_name());
 			form.setPrice(productMst.getProduct_price());
 			form.setStock(productMst.getProduct_stock());
-
 			//Modelに登録
 			model.addAttribute("ProductRegistForm", form);
-
 		}
 		return "home";
 	}
@@ -104,6 +95,12 @@ public class ProductsInfoController {
 			model.addAttribute("result", "削除失敗");
 		}
 		//商品一覧画面を表示
+		return getProductList(model);
+	}
+
+	@GetMapping("/products_info/csv")
+	public String productCsvOut(Model model) throws DataAccessException {
+		// 拡張用 
 		return getProductList(model);
 	}
 }

@@ -56,17 +56,11 @@ public class BusinessInfoController {
 		return "home";
 	}
 
-	@GetMapping("/business_info/csv")
-	public String businessCsvOut(Model model) throws DataAccessException {
-		// 拡張用 
-		return getBusinessList(model);
-	}
-
 	//取引削除用処理.
 	@PostMapping(path = "/business_info", params = "delete")
 	public String postBusinessDetailDelete(@RequestParam String id, Model model) {
-		System.out.println("削除ボタンの処理");
 
+		System.out.println("削除ボタンの処理");
 		boolean result = businessService.deleteOne(String.valueOf(id));
 		if (result == true) {
 			model.addAttribute("result", "削除成功");
@@ -74,6 +68,12 @@ public class BusinessInfoController {
 			model.addAttribute("result", "削除失敗");
 		}
 		//取引一覧画面を表示
+		return getBusinessList(model);
+	}
+
+	@GetMapping("/business_info/csv")
+	public String businessCsvOut(Model model) throws DataAccessException {
+		// 拡張用 
 		return getBusinessList(model);
 	}
 

@@ -36,7 +36,7 @@
 				<div class="row align-items-center justify-content-between">
 					<div class="float-left">
 						<!--CSV出力用のリンク-->
-						<a class="btn btn-primary" th:href="@{'/user_info/csv'}">CSV出力</a>
+						<!-- <a class="btn btn-primary" th:href="@{'/user_info/csv'}">CSV出力</a> -->
 					</div>
 					<div class="col-center">
 						<!--更新・削除処理の結果表示用-->
@@ -61,7 +61,9 @@
 					<td th:text="${#dates.format(userMst.user_birthday,'YYYY/MM/dd')}"></td>
 					<td th:text="${userMst.user_gender}"></td>
 					<td>
-						<a class="btn btn-info" th:href="@{'/user_detail/'+${userMst.user_id}}">詳細</a>
+						<form method="get" th:action="@{/user_detail}">
+							<button type="submit" name="userId" class="btn btn-info" th:value="${userMst.user_id}">詳細</button>
+						</form>
 					</td>
 				</tr>
 			</table>

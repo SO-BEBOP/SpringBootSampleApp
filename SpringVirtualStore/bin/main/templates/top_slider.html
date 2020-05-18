@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
 <meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 
 <body>
@@ -18,7 +16,7 @@
 				<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 				<div class="row align-items-center">
 					<div class="col-lg-12">
-						<form method="post" enctype="plain" id="sendMessageForm"
+						<form method="post" enctype="plain" th:action="@{/addcart}" id="sendMessageForm"
 							target="sendMessage">
 							<div class="banner_slider owl-carousel">
 
@@ -28,23 +26,23 @@
 										<div class="banner_img d-none d-lg-block">
 											<img src="img/banner_img.png" alt="">
 										</div>
-										<div class="col-lg-5 col-md-8">
+										<div class="col-lg-5">
 											<div class="banner_text">
 												<div class="banner_text_iner">
 													<h1>Sample WebApp 01</h1>
-													<p>
-														This web application is a demonstration.<br> Your
-														entries do not affect your privacy, but please do not
-														enter accurate personal information.
+													<p class="mb-3">
+														This web application is a demonstration.
+														<br>
+														Your entries do not affect your privacy, but please do not enter accurate personal
+														information.
 													</p>
-													<button type="submit" class="btn_2 bg-success"
-														th:value="${0}" name="productId" data-toggle="modal"
-														data-target="#Modal">buy now</button>
+													<h3 class="col-auto mt-3 mb-4">
+														<strong class="border-bottom">&nbsp;&nbsp;&yen;&nbsp;3000&nbsp;&nbsp;</strong>
+													</h3>
+													<button type="submit" class="btn_2 bg-success" th:value="${0}" name="productId"
+														data-toggle="modal" data-target="#Modal">buy now</button>
 												</div>
 											</div>
-										</div>
-										<div class="banner_img d-none d-lg-block">
-											<img src="img/banner_img.png" alt="">
 										</div>
 									</div>
 								</div>
@@ -60,19 +58,19 @@
 											<div class="banner_text">
 												<div class="banner_text_iner">
 													<h1>Sample WebApp 02</h1>
-													<p>
-														This web application is a demonstration.<br> Your
-														entries do not affect your privacy, but please do not
-														enter accurate personal information.
+													<p class="mb-3">
+														This web application is a demonstration.
+														<br>
+														Your entries do not affect your privacy, but please do not enter accurate personal
+														information.
 													</p>
-													<button type="submit" class="btn_2 bg-success"
-														th:value="${1}" name="productId" data-toggle="modal"
-														data-target="#Modal">buy now</button>
+													<h3 class="col-auto mt-3 mb-4">
+														<strong class="border-bottom">&nbsp;&nbsp;&yen;&nbsp;5000&nbsp;&nbsp;</strong>
+													</h3>
+													<button type="submit" class="btn_2 bg-success" th:value="${1}" name="productId"
+														data-toggle="modal" data-target="#Modal">buy now</button>
 												</div>
 											</div>
-										</div>
-										<div class="banner_img d-none d-lg-block">
-											<img src="img/banner_img.png" alt="">
 										</div>
 									</div>
 								</div>
@@ -88,19 +86,19 @@
 											<div class="banner_text">
 												<div class="banner_text_iner">
 													<h1>Sample WebApp 03</h1>
-													<p>
-														This web application is a demonstration.<br> Your
-														entries do not affect your privacy, but please do not
-														enter accurate personal information.
+													<p class="mb-3">
+														This web application is a demonstration.
+														<br>
+														Your entries do not affect your privacy, but please do not enter accurate personal
+														information.
 													</p>
-													<button type="submit" class="btn_2 bg-success"
-														th:value="${2}" name="productId" data-toggle="modal"
-														data-target="#Modal">buy now</button>
+													<h3 class="col-auto mt-3 mb-4">
+														<strong class="border-bottom">&nbsp;&nbsp;&yen;&nbsp;10000&nbsp;&nbsp;</strong>
+													</h3>
+													<button type="submit" class="btn_2 bg-success" th:value="${2}" name="productId"
+														data-toggle="modal" data-target="#Modal">buy now</button>
 												</div>
 											</div>
-										</div>
-										<div class="banner_img d-none d-lg-block">
-											<img src="img/banner_img.png" alt="">
 										</div>
 									</div>
 								</div>
@@ -108,31 +106,31 @@
 							<!-- Sample product 03 -->
 
 							<!-- modal -->
-							<div class="modal fade" id="Modal" tabindex="-1" role="dialog"
-								aria-labelledby="Modal" aria-hidden="true">
+							<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="Modal"
+								aria-hidden="true">
 								<div class="modal-dialog modal-dialog-centered" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h5 class="modal-title  font-weight-bold" id="Modal">Add
-												to Cart</h5>
-											<button type="button" class="close" data-dismiss="modal"
-												aria-label="close">
+											<h5 class="modal-title  font-weight-bold" id="Modal">Add to Cart</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="close">
 												<span aria-hidden="true">&times;</span>
 											</button>
 										</div>
-										<div class="modal-body text-center">選択した商品をカートに追加しました。</div>
+										<div class="modal-body text-center" role="presentation" sec:authorize="isAnonymous()">ログインしてください。</div>
+										<div class="modal-body text-center" role="presentation"
+											sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_GENERAL')">選択した商品をカートに追加しました。</div>
 										<div class="modal-footer">
-											<button type="button" class="productId btn btn-primary w-20"
-												data-dismiss="modal">OK</button>
+											<button type="button" class="productId btn btn-primary w-20" data-dismiss="modal">OK</button>
 										</div>
+
 									</div>
 								</div>
 							</div>
 							<!-- modal -->
+
 						</form>
 						<!-- submitでの画面遷移阻止 -->
-						<iframe name="sendMessage"
-							style="width: 0px; height: 0px; border: 0px;"></iframe>
+						<iframe name="sendMessage" style="width: 0px; height: 0px; border: 0px;"></iframe>
 						<!-- submitでの画面遷移阻止 -->
 					</div>
 				</div>

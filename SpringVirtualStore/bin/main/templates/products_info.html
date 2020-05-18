@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
 <meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 
 <body>
@@ -21,7 +19,9 @@
 							<div class="breadcrumb_iner_item">
 								<h2>product info</h2>
 								<p>
-									Home <span>-</span> product info
+									Home
+									<span>-</span>
+									product info
 								</p>
 							</div>
 						</div>
@@ -37,7 +37,7 @@
 					<div class="float-left">
 						<!--CSV出力用のリンク-->
 						<a class="btn btn-primary" th:href="@{'/product_regist'}">商品登録</a>
-						<a class="btn btn-primary" th:href="@{'/product_info/csv'}">CSV出力</a>
+						<!-- 	<a class="btn btn-primary" th:href="@{'/product_info/csv'}">CSV出力</a> -->
 					</div>
 					<div class="col-center">
 						<!--更新・削除処理の結果表示用-->
@@ -51,20 +51,24 @@
 					<th class="info col-sm-auto">商品名</th>
 					<th class="info col-sm-auto">価格</th>
 					<th class="info col-sm-auto">在庫</th>
-					<th class="info col-sm-auto text-danger"><label
-						th:text="'合計：'+${productListCount}+'件'"></label></th>
+					<th class="info col-sm-auto text-danger">
+						<label th:text="'合計：'+${productListCount}+'件'"></label>
+					</th>
 				</tr>
 				<tr th:each="productMst:${productList}">
 					<td th:text="${productMst.product_id}"></td>
 					<td th:text="${productMst.product_name}"></td>
 					<td th:text="${productMst.product_price}"></td>
 					<td th:text="${productMst.product_stock}"></td>
-					<td><a class="btn btn-info"
-						th:href="@{'/products_detail/'+${productMst.product_id}}">詳細</a></td>
+					<td>
+						<form method="get" th:action="@{/products_detail}">
+							<button type="submit" name="productId" class="btn btn-info"
+								th:value="${productMst.product_id}">詳細</button>
+						</form>
+					</td>
 				</tr>
 			</table>
 		</div>
-	</div>
 	</div>
 </body>
 
