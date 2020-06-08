@@ -37,9 +37,20 @@ dependencies {
 	compile 'org.aspectj:aspectjweaver:1.7.3'
 	compile 'org.springframework.boot:spring-boot-starter-security'
 	compile "org.thymeleaf.extras:thymeleaf-extras-springsecurity5"
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+
+	testImplementation ('org.springframework.security:spring-security-test')
+	testImplementation('org.springframework.boot:spring-boot-starter-test'){
+	// Junit4を除外する場合以下を適用
+	//exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+	//JUnit5のAPI
+	testImplementation 'org.junit.jupiter:junit-jupiter'
+	//IDEなどのサポート用
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	//JUnit3,4対応
+	testRuntimeOnly 'org.junit.vintage:junit-vintage-engine'
+
+	testCompileOnly 'junit:junit'
 }
 
 test {
