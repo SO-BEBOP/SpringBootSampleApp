@@ -12,3 +12,7 @@ LG : Java 8 / FW : SpringBoot / DB : MySQL
 ## 利用にあたって
 ・application.propertiesを環境に合わせて上書きして下さい。  
 ・起動時にスキーマを読み込む場合はコメントアウトを外して下さい。  
+・デフォルトユーザデータ
+    管理ユーザ admin/password
+    一般ユーザ general/test
+    
