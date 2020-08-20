@@ -1,6 +1,6 @@
 # SpringBootVirtualStore
-SpringBoot未経験メンバ向け資料として作成。
-2020.4.23 基本機能のみ実装。未完部分は随時更新。
+SpringBoot未経験メンバ向け資料として作成。  
+2020.4.23 基本機能のみ実装。未完部分は随時更新。  
 
 ## 概要
 SpringBootの基本機能を用いたECサイトのWebAppです。  
